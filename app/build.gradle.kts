@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -5,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.smartulcerpredictor"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.example.smartulcerpredictor"
@@ -60,4 +62,25 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+}
+
+tasks.register<Exec>("adbReverse") {
+    val localProperties = Properties()
+    val localPropertiesFile = project.rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { localProperties.load(it) }
+    }
+    val sdkDir = localProperties.getProperty("sdk.dir") ?: System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT")
+    val adbPath = if (sdkDir != null) {
+        val adbFile = File(sdkDir, "platform-tools/adb.exe")
+        if (adbFile.exists()) adbFile.absolutePath else "adb"
+    } else {
+        "adb"
+    }
+    commandLine(adbPath, "reverse", "tcp:8080", "tcp:80")
+    isIgnoreExitValue = true
+}
+
+tasks.named("preBuild") {
+    dependsOn("adbReverse")
 }

@@ -26,11 +26,11 @@ export function ForgotPassword({ onBack, onSendSuccess, makeRequest, showToast }
     };
 
     return (
-        <section id="forgot-password-screen" className="screen active auth-gradient">
-            <div className="auth-container card-overlay">
+        <section id="forgot-password-screen" className="screen active">
+            <div className="auth-container">
                 <div className="back-bar">
-                    <button className="btn-back btn-back-light" onClick={onBack} disabled={isLoading}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button className="btn-back btn-back-dark" onClick={onBack} disabled={isLoading}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <line x1="19" y1="12" x2="5" y2="12"></line>
                             <polyline points="12,19 5,12 12,5"></polyline>
                         </svg>
@@ -39,12 +39,12 @@ export function ForgotPassword({ onBack, onSendSuccess, makeRequest, showToast }
                 </div>
                 
                 <h2>Forgot Password?</h2>
-                <p className="subtitle text-light-trans">Enter your email to receive a verification code</p>
+                <p className="subtitle">Enter your email to receive a verification code</p>
                 
                 <form id="forgot-form" className="auth-form mt-large" onSubmit={handleSubmit}>
-                    <div className="input-group light">
+                    <div className="input-group">
                         <span className="input-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                 <polyline points="22,6 12,13 2,6"></polyline>
                             </svg>
@@ -60,7 +60,7 @@ export function ForgotPassword({ onBack, onSendSuccess, makeRequest, showToast }
                         />
                     </div>
                     
-                    <button type="submit" className="btn btn-trans-white btn-large btn-auth mt-large" disabled={isLoading}>
+                    <button type="submit" className="btn btn-primary btn-large btn-auth mt-large" disabled={isLoading}>
                         {isLoading ? (
                             <span className="spinner"></span>
                         ) : (

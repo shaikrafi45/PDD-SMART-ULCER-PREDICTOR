@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Appium Mobile Automation Suite" parallel="none">
+    <listeners>
+        <listener class-name="com.example.automation.listeners.TestListener" />
+    </listeners>
+    <test name="E2E Functional Tests">
+        <classes>
+            <class name="com.example.automation.tests.AppiumE2ETest" />
+        </classes>
+    </test>
+</suite>

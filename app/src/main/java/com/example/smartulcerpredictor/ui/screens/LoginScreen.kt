@@ -18,7 +18,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -45,17 +44,10 @@ fun LoginScreen(onBack: () -> Unit = {}, onLogin: () -> Unit = {}, onForgotPassw
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    val gradientBackground = Brush.verticalGradient(
-        colors = listOf(
-            Color(0xFF42A5F5), // Light Blue
-            Color(0xFF7B1FA2)  // Deep Purple
-        )
-    )
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradientBackground)
+            .background(Color(0xFFF0F7FF)) // Light blue background matching RegisterScreen
     ) {
         Column(
             modifier = Modifier
@@ -74,33 +66,33 @@ fun LoginScreen(onBack: () -> Unit = {}, onLogin: () -> Unit = {}, onForgotPassw
                     modifier = Modifier
                         .size(40.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(Color.White.copy(alpha = 0.2f))
+                        .background(Color.White)
                         .clickable(enabled = !isLoading) { onBack() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
-                        tint = Color.White
+                        tint = Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = "Back",
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Medium
                 )
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             // Logo in White Circle
             Surface(
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.size(110.dp),
                 shape = CircleShape,
                 color = Color.White,
-                shadowElevation = 8.dp
+                shadowElevation = 4.dp
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.app_logo),
@@ -111,40 +103,40 @@ fun LoginScreen(onBack: () -> Unit = {}, onLogin: () -> Unit = {}, onForgotPassw
                 )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Text(
                 text = "Welcome Back 👋",
-                color = Color.White,
+                color = Color.Black,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
                 text = "Please log in with your registered email",
-                color = Color.White.copy(alpha = 0.8f),
+                color = Color.Gray,
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             // Email Field
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                placeholder = { Text("Enter your email", color = Color.White.copy(alpha = 0.6f)) },
-                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = Color.White) },
+                placeholder = { Text("Enter your email", color = Color.Gray) },
+                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = Color(0xFF1976D2)) },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(12.dp),
                 enabled = !isLoading,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.White.copy(alpha = 0.5f),
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color.LightGray,
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White
                 )
             )
 
@@ -154,53 +146,47 @@ fun LoginScreen(onBack: () -> Unit = {}, onLogin: () -> Unit = {}, onForgotPassw
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                placeholder = { Text("Enter your password", color = Color.White.copy(alpha = 0.6f)) },
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color.White) },
+                placeholder = { Text("Enter your password", color = Color.Gray) },
+                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color(0xFF1976D2)) },
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = !passwordVisible }, enabled = !isLoading) {
                         Icon(
                             imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = null,
-                            tint = Color.White
+                            tint = Color.Gray
                         )
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(12.dp),
                 enabled = !isLoading,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.White.copy(alpha = 0.5f),
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color.LightGray,
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White
                 )
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             // Forgot Password
             Text(
                 text = "Forgot Password?",
-                color = Color.White,
+                color = Color(0xFF1976D2),
                 fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .align(Alignment.End)
                     .clickable(enabled = !isLoading) { onForgotPassword() }
             )
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            // Login Button with Gradient
-            val buttonGradient = Brush.horizontalGradient(
-                colors = listOf(
-                    Color(0xFF2196F3),
-                    Color(0xFF9C27B0)
-                )
-            )
-
+            // Login Button
             Button(
                 onClick = {
                     if (email.isBlank() || password.isBlank()) {
@@ -233,11 +219,10 @@ fun LoginScreen(onBack: () -> Unit = {}, onLogin: () -> Unit = {}, onForgotPassw
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp)
-                    .background(buttonGradient, RoundedCornerShape(20.dp)),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                    .height(56.dp),
+                shape = RoundedCornerShape(12.dp),
                 enabled = !isLoading,
-                contentPadding = PaddingValues()
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
             ) {
                 if (isLoading) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))

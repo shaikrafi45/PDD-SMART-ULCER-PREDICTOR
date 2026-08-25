@@ -16,12 +16,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,17 +42,10 @@ fun ResetPasswordScreen(onBack: () -> Unit = {}, onResetSuccess: () -> Unit = {}
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    val gradientBackground = Brush.verticalGradient(
-        colors = listOf(
-            Color(0xFF42A5F5), // Light Blue
-            Color(0xFF7B1FA2)  // Deep Purple
-        )
-    )
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradientBackground)
+            .background(Color(0xFFF0F7FF)) // Light blue background matching RegisterScreen
     ) {
         Column(
             modifier = Modifier
@@ -71,20 +64,20 @@ fun ResetPasswordScreen(onBack: () -> Unit = {}, onResetSuccess: () -> Unit = {}
                     modifier = Modifier
                         .size(40.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(Color.White.copy(alpha = 0.2f))
+                        .background(Color.White)
                         .clickable(enabled = !isLoading) { onBack() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
-                        tint = Color.White
+                        tint = Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = "Back",
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -94,7 +87,7 @@ fun ResetPasswordScreen(onBack: () -> Unit = {}, onResetSuccess: () -> Unit = {}
 
             Text(
                 text = "Reset Password",
-                color = Color.White,
+                color = Color.Black,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -103,30 +96,30 @@ fun ResetPasswordScreen(onBack: () -> Unit = {}, onResetSuccess: () -> Unit = {}
 
             Text(
                 text = "Set your new password to regain access to your account",
-                color = Color.White.copy(alpha = 0.8f),
+                color = Color.Gray,
                 fontSize = 15.sp,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             // Reset Code Field
             OutlinedTextField(
                 value = resetCode,
                 onValueChange = { resetCode = it },
-                placeholder = { Text("Verification Code", color = Color.White.copy(alpha = 0.6f)) },
-                leadingIcon = { Icon(Icons.Default.Key, contentDescription = null, tint = Color.White) },
+                placeholder = { Text("Verification Code", color = Color.Gray) },
+                leadingIcon = { Icon(Icons.Default.Key, contentDescription = null, tint = Color(0xFF1976D2)) },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(12.dp),
                 enabled = !isLoading,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.White.copy(alpha = 0.5f),
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color.LightGray,
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White
                 )
             )
 
@@ -136,28 +129,28 @@ fun ResetPasswordScreen(onBack: () -> Unit = {}, onResetSuccess: () -> Unit = {}
             OutlinedTextField(
                 value = newPassword,
                 onValueChange = { newPassword = it },
-                placeholder = { Text("New Password", color = Color.White.copy(alpha = 0.6f)) },
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color.White) },
+                placeholder = { Text("New Password", color = Color.Gray) },
+                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color(0xFF1976D2)) },
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = !passwordVisible }, enabled = !isLoading) {
                         Icon(
                             imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = null,
-                            tint = Color.White
+                            tint = Color.Gray
                         )
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(12.dp),
                 enabled = !isLoading,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.White.copy(alpha = 0.5f),
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color.LightGray,
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White
                 )
             )
 
@@ -167,32 +160,32 @@ fun ResetPasswordScreen(onBack: () -> Unit = {}, onResetSuccess: () -> Unit = {}
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                placeholder = { Text("Confirm Password", color = Color.White.copy(alpha = 0.6f)) },
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color.White) },
+                placeholder = { Text("Confirm Password", color = Color.Gray) },
+                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color(0xFF1976D2)) },
                 trailingIcon = {
                     IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }, enabled = !isLoading) {
                         Icon(
                             imageVector = if (confirmPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = null,
-                            tint = Color.White
+                            tint = Color.Gray
                         )
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(12.dp),
                 enabled = !isLoading,
                 visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.White.copy(alpha = 0.5f),
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color.LightGray,
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White
                 )
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             // Reset Password Button
             Button(
@@ -239,21 +232,19 @@ fun ResetPasswordScreen(onBack: () -> Unit = {}, onResetSuccess: () -> Unit = {}
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp)
-                    .background(
-                        Brush.horizontalGradient(listOf(Color(0xFF2196F3), Color(0xFF9C27B0))),
-                        RoundedCornerShape(20.dp)
-                    ),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                enabled = !isLoading,
-                contentPadding = PaddingValues()
+                    .height(56.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF1976D2),
+                    contentColor = Color.White
+                ),
+                enabled = !isLoading
             ) {
                 if (isLoading) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                 } else {
                     Text(
                         text = "Reset Password",
-                        color = Color.White,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )

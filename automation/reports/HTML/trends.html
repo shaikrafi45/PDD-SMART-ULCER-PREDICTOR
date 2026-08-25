@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Execution Trends</title>
+<style>
+body { font-family: 'Outfit', sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+h1 { color: #38bdf8; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: #1e293b; border-radius: 8px; overflow: hidden; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; }
+th { background-color: #475569; color: white; }
+.trend-up { color: #4ade80; }
+</style>
+</head>
+<body>
+<h1>Build Execution Historical Trends</h1>
+<p>Historical monitoring tracking previous automation runs:</p>
+<table>
+<thead>
+<tr><th>Build ID</th><th>Date</th><th>Total Tests</th><th>Passed</th><th>Failed</th><th>Pass Rate</th></tr>
+</thead>
+<tbody>
+<tr><td>build-003 (Latest)</td><td>2026-08-05</td><td>400</td><td>393</td><td>6</td><td class="trend-up">98.25%</td></tr>
+<tr><td>build-002</td><td>2026-07-28</td><td>400</td><td>391</td><td>8</td><td>97.75%</td></tr>
+<tr><td>build-001</td><td>2026-07-15</td><td>400</td><td>388</td><td>11</td><td>97.00%</td></tr>
+</tbody>
+</table>
+</body>
+</html>

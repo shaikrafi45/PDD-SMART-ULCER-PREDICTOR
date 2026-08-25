@@ -20,7 +20,7 @@ import './css/style.css';
 const CONFIG = {
     apiBaseUrl: window.location.origin.includes('localhost') 
         ? 'http://localhost/smart_ulcer_api/' 
-        : 'http://172.20.10.4/smart_ulcer_api/',
+        : 'https://8a32813407e2a0.lhr.life/smart_ulcer_api/',
     splashDelay: 4000,
     mockMode: false
 };
@@ -100,8 +100,13 @@ export function App() {
         setCurrentScreen(screenId);
     };
 
-    const navigateBack = () => {
-        if (navigationStack.length === 0) return;
+    const navigateBack = (fallbackScreen = null) => {
+        if (navigationStack.length === 0) {
+            if (fallbackScreen) {
+                setCurrentScreen(fallbackScreen);
+            }
+            return;
+        }
         
         const prevScreenId = navigationStack[navigationStack.length - 1];
         setNavigationStack(prev => prev.slice(0, -1));
@@ -346,7 +351,7 @@ export function App() {
             case 'login':
                 return (
                     <Login 
-                        onBack={navigateBack}
+                        onBack={() => navigateBack('register')}
                         onLoginSuccess={handleLoginSuccess}
                         onForgotPasswordClick={() => navigateTo('forgot-password')}
                         makeRequest={makeRequest}
@@ -357,7 +362,7 @@ export function App() {
             case 'forgot-password':
                 return (
                     <ForgotPassword 
-                        onBack={navigateBack}
+                        onBack={() => navigateBack('login')}
                         onSendSuccess={(email) => { setLastResetEmail(email); navigateTo('reset-password'); }}
                         makeRequest={makeRequest}
                         showToast={showToast}
@@ -367,7 +372,7 @@ export function App() {
             case 'reset-password':
                 return (
                     <ResetPassword 
-                        onBack={navigateBack}
+                        onBack={() => navigateBack('login')}
                         onResetSuccess={() => navigateTo('login', [])}
                         emailAddress={lastResetEmail}
                         makeRequest={makeRequest}

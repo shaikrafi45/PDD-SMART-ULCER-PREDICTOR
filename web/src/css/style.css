@@ -15,17 +15,17 @@
     --color-warning: #FFB300;         /* Functional Amber */
     --color-dark: #1D3557;            /* Navy Blue for text */
     --color-charcoal: #333333;        /* Dark grey card background */
-    --color-bg: #FBFBFB;              /* Ultra-light background */
+    --color-bg: #F0F7FF;              /* Light blue background */
     --color-white: #FFFFFF;
     
     /* Gadients */
-    --gradient-bg: linear-gradient(135deg, #42A5F5 0%, #7B1FA2 100%);
-    --gradient-btn: linear-gradient(90deg, #2196F3 0%, #9C27B0 100%);
-    
+    --gradient-bg: #F0F7FF;
+    --gradient-btn: linear-gradient(90deg, #1976D2 0%, #1565C0 100%);
+
     /* Shadows & Borders */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 32px rgba(29, 53, 87, 0.15);
+    --shadow-sm: 0 2px 8px rgba(25, 118, 210, 0.04);
+    --shadow-md: 0 4px 16px rgba(25, 118, 210, 0.08);
+    --shadow-lg: 0 8px 32px rgba(25, 118, 210, 0.12);
     --border-radius-sm: 12px;
     --border-radius-md: 16px;
     --border-radius-lg: 24px;
@@ -53,7 +53,7 @@ html, body {
 
 body {
     font-family: var(--font-primary);
-    background-color: #121214; /* Dark outer backdrop */
+    background-color: #F0F7FF;
     color: var(--color-dark);
     display: flex;
     justify-content: center;
@@ -379,24 +379,23 @@ body {
     backdrop-filter: blur(10px);
 }
 
-#register-screen {
+#register-screen,
+#login-screen,
+#forgot-password-screen,
+#reset-password-screen {
     background-color: #F0F7FF; /* Very light blue background */
-}
-
-#register-screen h2, #register-screen p.subtitle {
-    color: var(--color-dark);
 }
 
 .auth-container h2 {
     font-size: 32px;
     font-weight: 700;
     margin-top: 10px;
-    color: var(--color-white);
+    color: var(--color-dark);
 }
 
 .auth-container p.subtitle {
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.7);
+    color: #666666;
     margin-top: 4px;
     text-align: center;
 }
@@ -1286,27 +1285,18 @@ body {
     }
 
     /* Auth Screens: Floating Card Style on Wide viewports */
-    .auth-container.card-overlay {
-        margin: auto;
-        height: auto;
-        max-height: 90vh;
-        max-width: 460px;
-        border-radius: var(--border-radius-lg);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: var(--shadow-lg);
-        background: rgba(255, 255, 255, 0.08);
-        padding: 32px;
-    }
-
-    #register-screen .auth-container {
+    #register-screen .auth-container,
+    #login-screen .auth-container,
+    #forgot-password-screen .auth-container,
+    #reset-password-screen .auth-container {
         margin: auto;
         height: auto;
         max-height: 90vh;
         max-width: 480px;
         border-radius: var(--border-radius-lg);
         background-color: var(--color-white);
-        box-shadow: var(--shadow-md);
-        border: 1px solid rgba(0,0,0,0.05);
+        box-shadow: 0 10px 30px rgba(25, 118, 210, 0.1);
+        border: 1px solid rgba(25, 118, 210, 0.12);
         padding: 32px;
     }
 

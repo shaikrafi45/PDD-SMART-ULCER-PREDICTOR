@@ -29,8 +29,10 @@ import com.example.smartulcerpredictor.data.api.RetrofitClient
 import com.example.smartulcerpredictor.data.api.UserSession
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 
 import com.example.smartulcerpredictor.ml.UlcerClassifier
@@ -82,9 +84,10 @@ fun UploadImageScreen(
                 if (part != null) {
                     val label = if (results.isNotEmpty()) results[0].label else "Unable to Identify"
                     val confidenceVal = if (results.isNotEmpty()) results[0].score * 100 else 0f
-                    val userIdBody = RequestBody.create(MediaType.parse("text/plain"), UserSession.userId.toString())
-                    val resultBody = RequestBody.create(MediaType.parse("text/plain"), label)
-                    val confidenceBody = RequestBody.create(MediaType.parse("text/plain"), confidenceVal.toString())
+                    val userIdBody = UserSession.userId.toString()
+                        .toRequestBody("text/plain".toMediaTypeOrNull())
+                    val resultBody = label.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val confidenceBody = confidenceVal.toString().toRequestBody("text/plain".toMediaTypeOrNull())
                     RetrofitClient.instance.uploadImage(userIdBody, resultBody, confidenceBody, part)
                     // We don't necessarily wait for the network to show the local TFLite result
                 }
@@ -258,7 +261,7 @@ fun getMultipartFromBitmap(bitmap: Bitmap): MultipartBody.Part? {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bos)
         val bytes = bos.toByteArray()
         bos.close()
-        val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), bytes)
+        val requestFile = bytes.toRequestBody("image/jpeg".toMediaTypeOrNull())
         MultipartBody.Part.createFormData("image", "wound_capture.jpg", requestFile)
     } catch (e: Exception) {
         null

@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "SmartUlcerPredictor"
 include(":app")
+include(":automation")
