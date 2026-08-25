@@ -23,6 +23,9 @@ public class ExcelReporter {
 
         try {
             generateMainReport(testCases, new File(dir, "Automation_Test_Report.xlsx"));
+            generateMainReport(testCases, new File(dir, "Selenium_Automation_Test_Report.xlsx"));
+            generateMainReport(testCases, new File(dir, "Security_Vulnerability_Test_Report.xlsx"));
+            generateMainReport(testCases, new File(dir, "Appium_Android_Test_Report.xlsx"));
             generateFilterReport(testCases, "PASSED", new File(dir, "Passed_Test_Cases.xlsx"));
             generateFilterReport(testCases, "FAILED", new File(dir, "Failed_Test_Cases.xlsx"));
             generateSummaryReport(testCases, new File(dir, "Execution_Summary.xlsx"));
