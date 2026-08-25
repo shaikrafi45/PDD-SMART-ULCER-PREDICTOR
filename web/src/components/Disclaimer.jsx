@@ -1,7 +1,7 @@
 import React from 'react';
 import appLogo from '../assets/app_logo.png';
 
-export function Disclaimer({ onConfirm }) {
+export function Disclaimer({ onConfirm, onGoToLogin, onGoToRegister }) {
     return (
         <section id="disclaimer-screen" className="screen active">
             <div className="disclaimer-card">
@@ -14,7 +14,10 @@ export function Disclaimer({ onConfirm }) {
                     <p>The predictions and recommendations provided by this app are based on general medical knowledge and may not be suitable for your specific condition. Always consult with a qualified healthcare provider for personalized medical advice.</p>
                     <p>In case of medical emergency or if you experience severe symptoms, contact your doctor or emergency services immediately. Do not rely on this app for urgent medical situations.</p>
                 </div>
-                <button onClick={onConfirm} className="btn btn-primary btn-large">OK</button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%', marginTop: '16px' }}>
+                    <button onClick={onGoToLogin || onConfirm} className="btn btn-primary btn-large btn-full-width">Login</button>
+                    <button onClick={onGoToRegister || onConfirm} className="btn btn-secondary btn-large btn-full-width">Register</button>
+                </div>
             </div>
         </section>
     );

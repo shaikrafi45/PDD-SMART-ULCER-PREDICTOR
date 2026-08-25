@@ -168,17 +168,19 @@ export function App() {
         }
     };
 
-    const uploadImageRequest = async (imageBlob, resultLabel, confidence) => {
+    const uploadImageRequest = async (imageBlob, resultLabel, confidence, imageBase64) => {
         if (mockModeRef.current) {
-            return handleMockUpload(imageBlob, resultLabel, confidence);
+            return handleMockUpload(imageBlob, resultLabel, confidence, imageBase64);
         }
         
         try {
             const formData = new FormData();
-            formData.append('user_id', currentUser.id);
+            formData.append('user_id', currentUser ? currentUser.id : 1);
             formData.append('result', resultLabel);
             formData.append('confidence', confidence);
-            formData.append('image', imageBlob, 'wound_capture.jpg');
+            if (imageBlob) {
+                formData.append('image', imageBlob, 'wound_capture.jpg');
+            }
             
             const response = await fetch(`${CONFIG.apiBaseUrl}upload_image.php`, {
                 method: 'POST',
@@ -192,7 +194,7 @@ export function App() {
             return await response.json();
         } catch (e) {
             console.warn("Upload image API connection failed. Saving locally to history database.", e);
-            return handleMockUpload(imageBlob, resultLabel, confidence);
+            return handleMockUpload(imageBlob, resultLabel, confidence, imageBase64);
         }
     };
 
@@ -295,20 +297,27 @@ export function App() {
         return { status: 'error', message: 'Endpoint not implemented' };
     };
 
-    const handleMockUpload = (imageBlob, resultLabel, confidence) => {
+    const handleMockUpload = (imageBlob, resultLabel, confidence, imageBase64) => {
         const history = JSON.parse(localStorage.getItem('mock_history')) || [];
         
         const historyItem = {
-            id: (history.length + 1).toString(),
+            id: Date.now().toString(),
             result: resultLabel,
             confidence: parseFloat(confidence),
-            image_path: analysisResult?.imageBase64 || appLogo,
+            image_path: imageBase64 || '',
             date: new Date().toISOString(),
-            user_id: currentUser.id
+            user_id: currentUser ? currentUser.id : 1
         };
         
-        history.push(historyItem);
-        localStorage.setItem('mock_history', JSON.stringify(history));
+        history.unshift(historyItem);
+        try {
+            localStorage.setItem('mock_history', JSON.stringify(history));
+        } catch (e) {
+            console.warn("LocalStorage storage full, keeping latest 5 items", e);
+            if (history.length > 5) {
+                localStorage.setItem('mock_history', JSON.stringify(history.slice(0, 5)));
+            }
+        }
         
         return {
             status: 'success',
@@ -319,7 +328,7 @@ export function App() {
 
     const handleMockGetHistory = (userId) => {
         const history = JSON.parse(localStorage.getItem('mock_history')) || [];
-        const userHistory = history.filter(item => item.user_id === userId);
+        const userHistory = history.filter(item => !userId || item.user_id === userId || item.user_id === 1);
         userHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
         return {
             status: 'success',
@@ -337,7 +346,13 @@ export function App() {
                 return <Splash />;
             
             case 'disclaimer':
-                return <Disclaimer onConfirm={() => navigateTo(currentUser ? 'dashboard' : 'register')} />;
+                return (
+                    <Disclaimer 
+                        onConfirm={() => navigateTo(currentUser ? 'dashboard' : 'login')}
+                        onGoToLogin={() => navigateTo(currentUser ? 'dashboard' : 'login')}
+                        onGoToRegister={() => navigateTo('register')}
+                    />
+                );
                 
             case 'register':
                 return (
@@ -352,9 +367,10 @@ export function App() {
             case 'login':
                 return (
                     <Login 
-                        onBack={() => navigateBack('register')}
+                        onBack={() => navigateBack('disclaimer')}
                         onLoginSuccess={handleLoginSuccess}
                         onForgotPasswordClick={() => navigateTo('forgot-password')}
+                        onRegisterClick={() => navigateTo('register')}
                         makeRequest={makeRequest}
                         showToast={showToast}
                     />

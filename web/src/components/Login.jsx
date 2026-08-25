@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import appLogo from '../assets/app_logo.png';
 
-export function Login({ onBack, onLoginSuccess, onForgotPasswordClick, makeRequest, showToast }) {
+export function Login({ onBack, onLoginSuccess, onForgotPasswordClick, onRegisterClick, makeRequest, showToast }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -98,7 +98,7 @@ export function Login({ onBack, onLoginSuccess, onForgotPasswordClick, makeReque
                                 </svg>
                             ) : (
                                 <svg className="eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
                             )}
@@ -119,6 +119,13 @@ export function Login({ onBack, onLoginSuccess, onForgotPasswordClick, makeReque
                         )}
                     </button>
                 </form>
+
+                <div className="auth-footer mt-medium text-center">
+                    <span>Don't have an account? </span>
+                    <a href="#" className="link-highlight font-bold" onClick={(e) => { e.preventDefault(); onRegisterClick(); }}>
+                        Register here
+                    </a>
+                </div>
             </div>
         </section>
     );

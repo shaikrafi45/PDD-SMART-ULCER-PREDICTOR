@@ -38,9 +38,32 @@ export function Upload({ onBack, onAnalysisComplete, uploadImageRequest, classif
         
         const reader = new FileReader();
         reader.onload = (e) => {
-            base64DataRef.current = e.target.result;
-            setPreviewSrc(e.target.result);
-            analyzeImage(e.target.result);
+            const rawDataUrl = e.target.result;
+            const img = new Image();
+            img.onload = () => {
+                const maxDim = 1000;
+                let w = img.naturalWidth || img.width;
+                let h = img.naturalHeight || img.height;
+                if (w > maxDim || h > maxDim) {
+                    if (w > h) {
+                        h = Math.round((h * maxDim) / w);
+                        w = maxDim;
+                    } else {
+                        w = Math.round((w * maxDim) / h);
+                        h = maxDim;
+                    }
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                base64DataRef.current = optimizedDataUrl;
+                setPreviewSrc(optimizedDataUrl);
+                analyzeImage(optimizedDataUrl);
+            };
+            img.src = rawDataUrl;
         };
         reader.readAsDataURL(file);
     };
@@ -87,21 +110,34 @@ export function Upload({ onBack, onAnalysisComplete, uploadImageRequest, classif
         const video = videoRef.current;
         if (!video) return;
 
+        const maxDim = 1000;
+        let w = video.videoWidth;
+        let h = video.videoHeight;
+        if (w > maxDim || h > maxDim) {
+            if (w > h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+            } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+            }
+        }
+
         const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        canvas.width = w;
+        canvas.height = h;
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(video, 0, 0, w, h);
         
         stopCameraStream();
 
         canvas.toBlob((blob) => {
             selectedBlobRef.current = blob;
-            const dataUrl = canvas.toDataURL('image/jpeg');
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
             base64DataRef.current = dataUrl;
             setPreviewSrc(dataUrl);
             analyzeImage(dataUrl);
-        }, 'image/jpeg', 0.90);
+        }, 'image/jpeg', 0.85);
     };
 
     const analyzeImage = async (base64Data) => {
@@ -136,7 +172,8 @@ export function Upload({ onBack, onAnalysisComplete, uploadImageRequest, classif
                     await uploadImageRequest(
                         selectedBlobRef.current, 
                         topResult.label, 
-                        confidenceVal.toFixed(2)
+                        confidenceVal.toFixed(2),
+                        base64Data
                     );
                     
                     setIsLoading(false);
