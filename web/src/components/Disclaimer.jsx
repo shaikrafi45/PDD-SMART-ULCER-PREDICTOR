@@ -1,9 +1,13 @@
 import React from 'react';
+import appLogo from '../assets/app_logo.png';
 
 export function Disclaimer({ onConfirm }) {
     return (
         <section id="disclaimer-screen" className="screen active">
             <div className="disclaimer-card">
+                <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+                    <img src={appLogo} alt="Smart Ulcer Predictor Logo" style={{ width: '80px', height: '80px', borderRadius: '16px', objectFit: 'contain' }} />
+                </div>
                 <h2 className="text-danger">Disclaimer</h2>
                 <div className="disclaimer-content">
                     <p>This application is designed to provide information and risk assessment related to foot ulcers. It is intended for educational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment.</p>

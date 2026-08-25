@@ -1,4 +1,5 @@
 import React from 'react';
+import appLogo from '../assets/app_logo.png';
 
 export function Dashboard({ onGoToHistory, onLogout, onUploadClick }) {
     return (
@@ -25,6 +26,14 @@ export function Dashboard({ onGoToHistory, onLogout, onUploadClick }) {
             </header>
             
             <div className="content-scrollable">
+                <div style={{ textAlign: 'center', margin: '20px 0 10px 0' }}>
+                    <img 
+                        src={appLogo} 
+                        alt="Smart Ulcer Predictor Logo" 
+                        style={{ width: '88px', height: '88px', borderRadius: '18px', objectFit: 'contain', boxShadow: '0 6px 16px rgba(0,0,0,0.12)' }} 
+                    />
+                </div>
+                
                 <div className="dashboard-section mt-medium">
                     <h3>How It Works</h3>
                     <div className="how-it-works-flow">
