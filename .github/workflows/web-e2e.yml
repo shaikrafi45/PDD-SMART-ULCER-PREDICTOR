@@ -97,41 +97,58 @@ jobs:
             automation/reports/Summary/
           retention-days: 30
 
-      - name: Deploy Reports to GitHub Pages
+      - name: Deploy Web App & Reports to GitHub Pages
         run: |
-          # Fetch all branches
-          git fetch origin
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Initialize or switch to gh-pages branch
-          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
-            git checkout gh-pages
-          else
-            git checkout --orphan gh-pages
-            git rm -rf .
-            mkdir -p reports/latest
-            echo "<h1>GitHub Pages Automation Dashboard</h1>" > index.html
-            git add index.html
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Initial gh-pages deploy"
-            git push origin gh-pages
+          # Prepare deployment bundle in a temporary directory
+          TEMP_DEPLOY=$(mktemp -d)
+          
+          # Copy Vite Web production build to root if present
+          if [ -d "web/dist" ]; then
+            echo "Copying Vite web production build to deployment bundle root..."
+            cp -R web/dist/* "$TEMP_DEPLOY/"
           fi
           
-          # Create targets
-          mkdir -p reports/latest/screenshots
-          mkdir -p reports/latest/logs
-          mkdir -p reports/history/build-${{ github.run_number }}
+          # Ensure .nojekyll file exists so GitHub Pages serves all assets
+          touch "$TEMP_DEPLOY/.nojekyll"
           
-          # Sync latest report files
-          cp -R automation/reports/HTML/* reports/latest/
-          cp -R automation/reports/Summary/* reports/latest/
-          cp -R automation/reports/Screenshots/* reports/latest/screenshots/ || true
-          cp -R automation/reports/Excel/* reports/latest/ || true
+          # Prepare reports subdirectories
+          mkdir -p "$TEMP_DEPLOY/reports/latest"
+          mkdir -p "$TEMP_DEPLOY/reports/history/build-${{ github.run_number }}"
           
-          # Sync history copy
-          cp -R reports/latest/* reports/history/build-${{ github.run_number }}/
+          if [ -d "automation/reports/HTML" ]; then
+            cp -R automation/reports/HTML/* "$TEMP_DEPLOY/reports/latest/" || true
+          fi
+          if [ -d "automation/reports/Summary" ]; then
+            cp -R automation/reports/Summary/* "$TEMP_DEPLOY/reports/latest/" || true
+          fi
+          if [ -d "automation/reports/Screenshots" ]; then
+            mkdir -p "$TEMP_DEPLOY/reports/latest/screenshots"
+            cp -R automation/reports/Screenshots/* "$TEMP_DEPLOY/reports/latest/screenshots/" || true
+          fi
+          if [ -d "automation/reports/Excel" ]; then
+            cp -R automation/reports/Excel/* "$TEMP_DEPLOY/reports/latest/" || true
+          fi
           
-          # Add and push deployment changes
-          git add reports/
-          git commit -m "Deploy Selenium Reports for Build ${{ github.run_number }}"
+          # History copy
+          cp -R "$TEMP_DEPLOY/reports/latest"/* "$TEMP_DEPLOY/reports/history/build-${{ github.run_number }}/" || true
+
+          # Checkout gh-pages branch
+          git fetch origin
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git checkout gh-pages
+            git rm -rf . || true
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . || true
+          fi
+          
+          # Copy contents from temp bundle into gh-pages root
+          cp -R "$TEMP_DEPLOY"/* .
+          cp "$TEMP_DEPLOY/.nojekyll" .
+          
+          git add -A
+          git commit -m "Deploy Web App and Selenium Reports for Build ${{ github.run_number }}" || true
           git push origin gh-pages
