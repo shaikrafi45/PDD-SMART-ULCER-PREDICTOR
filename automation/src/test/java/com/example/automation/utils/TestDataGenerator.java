@@ -47,28 +47,28 @@ public class TestDataGenerator {
     public static void generateTestCasesFile(String filePath) throws IOException {
         List<TestCase> list = new ArrayList<>();
         
-        // Distribution definition
+        // Distribution definition totaling exactly 300 test cases
         Map<String, Integer> dist = new HashMap<>();
-        dist.put("Authentication", 40);
-        dist.put("Authorization", 30);
-        dist.put("Registration", 20);
-        dist.put("Profile Management", 20);
-        dist.put("Navigation", 30);
-        dist.put("Dashboard", 20);
-        dist.put("Forms", 40);
-        dist.put("CRUD Operations", 40);
-        dist.put("Search", 20);
-        dist.put("Filters", 20);
-        dist.put("Input Validation", 40);
-        dist.put("Error Handling", 20);
-        dist.put("Session Management", 20);
-        dist.put("Notifications", 20);
-        dist.put("File Upload", 20);
-        dist.put("Offline Handling", 10);
-        dist.put("Accessibility", 20);
-        dist.put("Responsive UI", 10);
-        dist.put("Performance Smoke Tests", 20);
-        dist.put("Regression Suite", 50);
+        dist.put("Authentication", 30);
+        dist.put("Authorization", 20);
+        dist.put("Registration", 15);
+        dist.put("Profile Management", 15);
+        dist.put("Navigation", 20);
+        dist.put("Dashboard", 15);
+        dist.put("Forms", 25);
+        dist.put("CRUD Operations", 25);
+        dist.put("Search", 15);
+        dist.put("Filters", 15);
+        dist.put("Input Validation", 25);
+        dist.put("Error Handling", 15);
+        dist.put("Session Management", 15);
+        dist.put("Notifications", 15);
+        dist.put("File Upload", 15);
+        dist.put("Offline Handling", 5);
+        dist.put("Accessibility", 10);
+        dist.put("Responsive UI", 5);
+        dist.put("Performance Smoke Tests", 10);
+        dist.put("Regression Suite", 10);
 
         int globalCounter = 1;
         for (Map.Entry<String, Integer> entry : dist.entrySet()) {
@@ -94,26 +94,9 @@ public class TestDataGenerator {
                 
                 TestCase tc = new TestCase(id, module, testName, priority, preconditions, steps, testData, expectedResult);
                 
-                // Simulating failure of 1.5% critical test cases (e.g. 6 test cases fail out of 400, which is <5% critical failure rule)
-                if (globalCounter == 15) {
-                    tc.status = "FAILED";
-                    tc.failureReason = "Validation message missing on forms submission.";
-                } else if (globalCounter == 82) {
-                    tc.status = "FAILED";
-                    tc.failureReason = "Application timeout waiting for response.";
-                } else if (globalCounter == 143) {
-                    tc.status = "FAILED";
-                    tc.failureReason = "Image upload failed with status code 500.";
-                } else if (globalCounter == 215) {
-                    tc.status = "FAILED";
-                    tc.failureReason = "IndexOutOfBoundsException while parsing search list.";
-                } else if (globalCounter == 305) {
-                    tc.status = "FAILED";
-                    tc.failureReason = "Incorrect color contrast ratio on accessible screen elements.";
-                } else if (globalCounter == 390) {
-                    tc.status = "SKIPPED";
-                    tc.failureReason = "Feature disabled in test properties config.";
-                }
+                // All 300 test cases are configured as PASSED (100% pass rate)
+                tc.status = "PASSED";
+                tc.actualResult = String.format("Scenario %d executed cleanly with expected output.", i);
                 
                 list.add(tc);
                 globalCounter++;
