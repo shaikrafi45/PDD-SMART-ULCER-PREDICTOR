@@ -133,4 +133,4 @@ jobs:
           
           git add -A
           git commit -m "Deploy Selenium Web Reports and App for Build ${{ github.run_number }}" || true
-          git push origin gh-pages
+          git push origin gh-pages --force || true
