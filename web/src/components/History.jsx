@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import appLogo from '../assets/app_logo.png';
 
 export function History({ onBack, getHistoryRequest, showToast, userId, apiBaseUrl }) {
     const [historyList, setHistoryList] = useState([]);
@@ -107,9 +108,9 @@ export function History({ onBack, getHistoryRequest, showToast, userId, apiBaseU
                                     
                                     <div className="history-card-image">
                                         <img 
-                                            src={imgSrc || '/assets/app_logo.png'} 
+                                            src={imgSrc || appLogo} 
                                             alt="Wound log" 
-                                            onError={(e) => { e.target.src = '/assets/app_logo.png'; }}
+                                            onError={(e) => { e.target.src = appLogo; }}
                                         />
                                     </div>
                                     

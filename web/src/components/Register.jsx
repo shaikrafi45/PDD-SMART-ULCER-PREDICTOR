@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import registerHeader from '../assets/register_header.jpeg';
 
 export function Register({ onLoginClick, onRegisterSuccess, makeRequest, showToast }) {
     const [name, setName] = useState('');
@@ -41,7 +42,7 @@ export function Register({ onLoginClick, onRegisterSuccess, makeRequest, showToa
                 <p className="subtitle">Enter your details</p>
                 
                 <div className="auth-header-card">
-                    <img src="/assets/register_header.jpeg" alt="Medical Illustration" className="auth-header-img" />
+                    <img src={registerHeader} alt="Medical Illustration" className="auth-header-img" />
                 </div>
                 
                 <form id="register-form" className="auth-form" onSubmit={handleSubmit}>

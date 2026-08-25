@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import appLogo from './assets/app_logo.png';
 import Splash from './components/Splash';
 import Disclaimer from './components/Disclaimer';
 import Register from './components/Register';
@@ -301,7 +302,7 @@ export function App() {
             id: (history.length + 1).toString(),
             result: resultLabel,
             confidence: parseFloat(confidence),
-            image_path: analysisResult?.imageBase64 || "/assets/app_logo.png",
+            image_path: analysisResult?.imageBase64 || appLogo,
             date: new Date().toISOString(),
             user_id: currentUser.id
         };

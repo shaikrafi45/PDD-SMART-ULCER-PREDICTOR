@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import appLogo from '../assets/app_logo.png';
 
 export function Login({ onBack, onLoginSuccess, onForgotPasswordClick, makeRequest, showToast }) {
     const [email, setEmail] = useState('');
@@ -42,7 +43,7 @@ export function Login({ onBack, onLoginSuccess, onForgotPasswordClick, makeReque
                 </div>
                 
                 <div className="logo-badge">
-                    <img src="/assets/app_logo.png" alt="Logo" />
+                    <img src={appLogo} alt="Logo" />
                 </div>
                 
                 <h2>Welcome Back 👋</h2>

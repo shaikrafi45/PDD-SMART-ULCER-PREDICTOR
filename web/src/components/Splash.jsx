@@ -1,4 +1,5 @@
 import React from 'react';
+import appLogo from '../assets/app_logo.png';
 
 export function Splash() {
     return (
@@ -8,7 +9,7 @@ export function Splash() {
             
             <div className="splash-card">
                 <div className="logo-container">
-                    <img src="/assets/app_logo.png" alt="Smart Ulcer Predictor Logo" className="app-logo" />
+                    <img src={appLogo} alt="Smart Ulcer Predictor Logo" className="app-logo" />
                 </div>
                 <h2>SMART ULCER<br />PREDICTOR</h2>
             </div>
