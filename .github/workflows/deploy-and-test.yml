@@ -58,41 +58,13 @@ jobs:
             cd ..
           fi
 
-      # Stage 5: Deploy to GitHub Pages
-      - name: Stage 5 - Deploy to GitHub Pages
-        run: |
-          git config user.name "shaikrafi45"
-          git config user.email "developer@smartulcerpredictor.local"
-          
-          TEMP_DEPLOY=$(mktemp -d)
-          if [ -d "web/dist" ]; then
-            cp -R web/dist/* "$TEMP_DEPLOY/"
-          fi
-          touch "$TEMP_DEPLOY/.nojekyll"
-          
-          git fetch origin
-          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
-            git checkout gh-pages
-            git rm -rf . || true
-          else
-            git checkout --orphan gh-pages
-            git rm -rf . || true
-          fi
-          
-          cp -R "$TEMP_DEPLOY"/* .
-          cp "$TEMP_DEPLOY/.nojekyll" .
-          
-          git add -A
-          git commit -m "Deploy Web App for Build ${{ github.run_number }}" || true
-          git push origin gh-pages --force || true
-          
-          git checkout main || git checkout master || true
-
+      # Stage 5: Deployment Notice
       - name: '👉 Live App URL: https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/'
         run: |
           echo "========================================================"
-          echo "LIVE APPLICATION DEPLOYED TO GITHUB PAGES:"
+          echo "LIVE APPLICATION DEPLOYED VIA PAGES WORKFLOW:"
           echo "https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/"
+          echo "========================================================"
           echo "========================================================"
 
       # Stage 6 & 7: Wait & Verify Deployment Availability

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
@@ -34,7 +36,34 @@ jobs:
           cd web
           npm install
           npm run build
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
           cd ..
+
+      - name: Sync gh-pages branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          TEMP_DEPLOY=$(mktemp -d)
+          cp -R web/dist/* "$TEMP_DEPLOY/"
+          touch "$TEMP_DEPLOY/.nojekyll"
+          cp "$TEMP_DEPLOY/index.html" "$TEMP_DEPLOY/404.html"
+          
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git checkout gh-pages
+            git rm -rf . || true
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . || true
+          fi
+          
+          cp -R "$TEMP_DEPLOY"/* .
+          cp "$TEMP_DEPLOY/.nojekyll" .
+          git add -A
+          git commit -m "Deploy Web App for Commit ${{ github.sha }}" || true
+          git push origin gh-pages --force || true
+          git checkout -f main || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
