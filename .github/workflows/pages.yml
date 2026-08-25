@@ -1,4 +1,4 @@
-name: Deploy Web App to GitHub Pages
+name: GitHub Pages Web App Deployment
 
 on:
   push:
