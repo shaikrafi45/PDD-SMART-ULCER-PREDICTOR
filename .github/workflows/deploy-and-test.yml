@@ -85,6 +85,13 @@ jobs:
           
           git checkout main || git checkout master || true
 
+      - name: '👉 Live App URL: https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/'
+        run: |
+          echo "========================================================"
+          echo "LIVE APPLICATION DEPLOYED TO GITHUB PAGES:"
+          echo "https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/"
+          echo "========================================================"
+
       # Stage 6 & 7: Wait & Verify Deployment Availability
       - name: Stage 6 & 7 - Verify Deployment Availability
         env:
