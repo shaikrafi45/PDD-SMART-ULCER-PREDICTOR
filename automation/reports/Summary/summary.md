@@ -8,12 +8,12 @@
 
 | Metric | Value |
 | --- | --- |
-| **Total Test Cases** | 320 |
-| **Passed** | 320 |
+| **Total Test Cases** | 310 |
+| **Passed** | 310 |
 | **Failed** | 0 |
 | **Skipped** | 0 |
 | **Pass Percentage** | 100.00% |
-| **Execution Duration** | 13.139s |
+| **Execution Duration** | 10.91s |
 
 ### FAILED TESTS
 

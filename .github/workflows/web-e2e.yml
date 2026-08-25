@@ -57,6 +57,8 @@ jobs:
           fi
 
       - name: Run Web Selenium E2E Tests
+        env:
+          BASE_URL: https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/
         run: |
           chmod +x gradlew
           ./gradlew -p automation test || true

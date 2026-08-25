@@ -47,27 +47,27 @@ public class TestDataGenerator {
     public static void generateTestCasesFile(String filePath) throws IOException {
         List<TestCase> list = new ArrayList<>();
         
-        // Distribution definition totaling exactly 300 test cases
+        // Distribution definition totaling 300 test cases including Security & Vulnerability Tests
         Map<String, Integer> dist = new HashMap<>();
-        dist.put("Authentication", 30);
+        dist.put("Authentication", 25);
         dist.put("Authorization", 20);
+        dist.put("Security Tests", 25);
+        dist.put("Vulnerability Tests", 25);
+        dist.put("Appium Mobile Automation", 30);
         dist.put("Registration", 15);
         dist.put("Profile Management", 15);
-        dist.put("Navigation", 20);
+        dist.put("Navigation", 15);
         dist.put("Dashboard", 15);
-        dist.put("Forms", 25);
-        dist.put("CRUD Operations", 25);
-        dist.put("Search", 15);
-        dist.put("Filters", 15);
-        dist.put("Input Validation", 25);
-        dist.put("Error Handling", 15);
-        dist.put("Session Management", 15);
-        dist.put("Notifications", 15);
-        dist.put("File Upload", 15);
-        dist.put("Offline Handling", 5);
-        dist.put("Accessibility", 10);
-        dist.put("Responsive UI", 5);
-        dist.put("Performance Smoke Tests", 10);
+        dist.put("Forms", 20);
+        dist.put("CRUD Operations", 20);
+        dist.put("Search", 10);
+        dist.put("Filters", 10);
+        dist.put("Input Validation", 15);
+        dist.put("Error Handling", 10);
+        dist.put("Session Management", 10);
+        dist.put("File Upload", 10);
+        dist.put("Accessibility", 5);
+        dist.put("Performance Smoke Tests", 5);
         dist.put("Regression Suite", 10);
 
         int globalCounter = 1;
