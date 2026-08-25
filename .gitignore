@@ -19,4 +19,9 @@ local.properties
 /web/dist/
 /automation/build/
 /.gradle/
+/backend/vendor/
+/backend/composer.phar
+/backend/uploads/*
+!/backend/uploads/.gitkeep
+
 
