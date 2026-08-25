@@ -47,3 +47,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Publish Deployment Summary
+        run: |
+          echo "# 🚀 Live Application Deployed Successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🌐 Live Application URL:" >> $GITHUB_STEP_SUMMARY
+          echo "## [https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/](https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: GitHub Pages Production" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deployment URL**: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ✅ Active & Live" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+
