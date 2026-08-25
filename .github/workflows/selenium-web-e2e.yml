@@ -1,4 +1,4 @@
-name: Selenium Web E2E Automation & CI/CD Pipeline
+name: Selenium Web E2E Test Suite (300 Tests)
 
 on:
   push:

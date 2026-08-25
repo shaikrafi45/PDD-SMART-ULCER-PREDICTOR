@@ -1,4 +1,4 @@
-name: Android Appium E2E Mobile Automation & CI/CD Pipeline
+name: Appium Android Mobile Test Suite (300 Tests)
 
 on:
   push:
