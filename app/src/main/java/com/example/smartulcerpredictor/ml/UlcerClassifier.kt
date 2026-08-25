@@ -19,41 +19,39 @@ class UlcerClassifier(context: Context) {
     private val labels: List<String> = FileUtil.loadLabels(context, "labels.txt")
 
     private fun isWoundImage(bitmap: Bitmap): Boolean {
-        val scaled = Bitmap.createScaledBitmap(bitmap, 100, 100, false)
+        val scaled = Bitmap.createScaledBitmap(bitmap, 120, 120, false)
         var skinWoundCount = 0
         var activeWoundCount = 0
-        val total = 10000.0f
         
         val hsv = FloatArray(3)
-        for (y in 0 until 100) {
-            for (x in 0 until 100) {
+        for (y in 0 until 120) {
+            for (x in 0 until 120) {
                 val color = scaled.getPixel(x, y)
                 android.graphics.Color.colorToHSV(color, hsv)
                 val h = hsv[0]
                 val s = hsv[1]
                 val v = hsv[2]
                 
-                val isSkinOrWound = (h in 0f..52f || h in 330f..360f) && 
-                                    (s in 0.12f..0.70f) && 
-                                    (v in 0.12f..0.95f)
+                val isSkinOrWound = (h in 0f..55f || h in 320f..360f) && 
+                                    (s in 0.08f..0.85f) && 
+                                    (v in 0.08f..0.98f)
                                     
                 if (isSkinOrWound) {
                     skinWoundCount++
                     
-                    val isGranulation = (h in 0f..14f || h in 340f..360f) && (s >= 0.28f) && (v >= 0.22f)
-                    val isSlough = (h in 28.0f..55f) && (s in 0.15f..0.52f) && (v >= 0.48f)
-                    val isNecrotic = (v <= 0.2f) && (s >= 0.08f) && (h in 0f..50f || h in 330f..360f)
+                    val isGranulation = (h in 0f..20f || h in 330f..360f) && (s >= 0.20f) && (v >= 0.18f)
+                    val isSlough = (h in 22.0f..65f) && (s in 0.10f..0.65f) && (v >= 0.35f)
+                    val isNecrotic = (v <= 0.25f) && (s >= 0.05f) && (h in 0f..60f || h in 320f..360f)
+                    val isEpithelial = (h in 310f..345f) && (s in 0.08f..0.50f) && (v >= 0.50f)
                     
-                    if (isGranulation || isSlough || isNecrotic) {
+                    if (isGranulation || isSlough || isNecrotic || isEpithelial) {
                         activeWoundCount++
                     }
                 }
             }
         }
         
-        val skinRatio = skinWoundCount / total
-        val woundRatio = activeWoundCount / total
-        return skinRatio >= 0.35f && woundRatio >= 0.015f
+        return activeWoundCount >= 15 || skinWoundCount >= 80
     }
 
     fun classify(bitmap: Bitmap): List<Category> {
