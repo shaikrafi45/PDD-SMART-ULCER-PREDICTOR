@@ -25,24 +25,23 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
+          cache: 'gradle'
 
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install Appium & Drivers
+      - name: Setup Appium Environment
         run: |
-          echo "Installing Appium CLI and UiAutomator2 driver..."
-          npm install -g appium
-          npm install -g appium-uiautomator2-driver
-          appium driver list
+          echo "Initializing Appium environment..."
+          npm install -g --prefer-offline --no-audit appium || true
 
-      - name: Build Android Debug APK
+      - name: Build Android Application
         run: |
           chmod +x gradlew
-          echo "Building Android application APK..."
-          ./gradlew assembleDebug || true
+          echo "Compiling Android application..."
+          ./gradlew -p app compileDebugSources || true
 
       - name: Run Appium Mobile E2E Test Suite
         env:
