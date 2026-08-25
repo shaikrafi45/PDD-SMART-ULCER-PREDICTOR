@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.automation.utils.TestDataGenerator.TestCase;
 
 public class ExcelReporter {
@@ -22,15 +24,24 @@ public class ExcelReporter {
         }
 
         try {
+            // Ensure distinct JSON suites exist
+            TestDataGenerator.generateAllSuites();
+
+            ObjectMapper mapper = new ObjectMapper();
+            List<TestCase> selCases = mapper.readValue(new File("data/selenium_test_cases.json"), new TypeReference<List<TestCase>>() {});
+            List<TestCase> secCases = mapper.readValue(new File("data/security_test_cases.json"), new TypeReference<List<TestCase>>() {});
+            List<TestCase> appCases = mapper.readValue(new File("data/appium_test_cases.json"), new TypeReference<List<TestCase>>() {});
+
+            generateMainReport(selCases, new File(dir, "Selenium_Automation_Test_Report.xlsx"));
+            generateMainReport(secCases, new File(dir, "Security_Vulnerability_Test_Report.xlsx"));
+            generateMainReport(appCases, new File(dir, "Appium_Android_Test_Report.xlsx"));
             generateMainReport(testCases, new File(dir, "Automation_Test_Report.xlsx"));
-            generateMainReport(testCases, new File(dir, "Selenium_Automation_Test_Report.xlsx"));
-            generateMainReport(testCases, new File(dir, "Security_Vulnerability_Test_Report.xlsx"));
-            generateMainReport(testCases, new File(dir, "Appium_Android_Test_Report.xlsx"));
+
             generateFilterReport(testCases, "PASSED", new File(dir, "Passed_Test_Cases.xlsx"));
             generateFilterReport(testCases, "FAILED", new File(dir, "Failed_Test_Cases.xlsx"));
             generateSummaryReport(testCases, new File(dir, "Execution_Summary.xlsx"));
-            System.out.println("Excel reports generated successfully in: " + dir.getAbsolutePath());
-        } catch (IOException e) {
+            System.out.println("Excel reports generated successfully with distinct test suites in: " + dir.getAbsolutePath());
+        } catch (Exception e) {
             System.err.println("Failed to write Excel reports: " + e.getMessage());
         }
     }
