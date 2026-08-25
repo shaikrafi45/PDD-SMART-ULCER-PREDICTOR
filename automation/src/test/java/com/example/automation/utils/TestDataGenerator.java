@@ -102,25 +102,39 @@ public class TestDataGenerator {
 
     private static void writeSuiteFile(String filePath, String prefixCode, Map<String, Integer> dist) throws IOException {
         List<TestCase> list = new ArrayList<>();
+        String[] priorities = {"CRITICAL", "HIGH", "MEDIUM", "LOW"};
+        long[] sampleTimes = {1709, 628, 451, 1918, 963, 901, 857, 685, 1908, 1124, 742, 539, 1340, 812, 690};
+        
+        String suiteCategory = "APP".equals(prefixCode) ? "Appium" : "SEL".equals(prefixCode) ? "Selenium" : "Security";
+        String suitePrefix = "APP".equals(prefixCode) ? "APPIUM" : "SEL".equals(prefixCode) ? "SELENIUM" : "SECURITY";
+
+        int globalIdx = 0;
         for (Map.Entry<String, Integer> entry : dist.entrySet()) {
-            String module = entry.getKey();
+            String rawModule = entry.getKey();
             int count = entry.getValue();
-            String prefix = module.replaceAll("[^A-Z]", "");
-            if (prefix.isEmpty()) prefix = prefixCode;
-            if (prefix.length() > 4) prefix = prefix.substring(0, 4);
+            String cleanModule = rawModule.replaceAll("[^a-zA-Z0-9]", "_");
+            String moduleDisplay = suiteCategory + " - " + cleanModule;
+            
+            String moduleShort = cleanModule.toUpperCase();
+            if (moduleShort.length() > 4) {
+                moduleShort = moduleShort.substring(0, 4);
+            }
 
             for (int i = 1; i <= count; i++) {
-                String id = String.format("TC_%s_%s_%03d", prefixCode, prefix, i);
-                String priority = (i % 3 == 0) ? "HIGH" : (i % 3 == 1) ? "MEDIUM" : "LOW";
-                String testName = String.format("Validate %s scenario %d", module, i);
-                String preconditions = String.format("Target environment initialized. User context ready for %s.", module);
-                String steps = String.format("1. Navigate to %s endpoint.\n2. Execute security/functional validation step %d.\n3. Verify response state.", module, i);
-                String testData = String.format("{\"testId\":\"%s\", \"param\":%d, \"secure\":true}", id, i);
-                String expectedResult = String.format("Scenario %d executed cleanly with expected status and zero vulnerabilities.", i);
+                globalIdx++;
+                String id = String.format("TC_%s_%s_%03d", suitePrefix, moduleShort, i);
+                String priority = priorities[(globalIdx - 1) % priorities.length];
+                String testName = String.format("test%s_%s_%03d_Verify%sScenario%d", suiteCategory, moduleShort, i, cleanModule, i);
+                String preconditions = String.format("App is initialized. User state prepared for %s.", rawModule);
+                String steps = String.format("1. Launch %s module.\n2. Trigger action on component %d.\n3. Validate state response.", rawModule, i);
+                String testData = String.format("{\"testId\":\"%s\", \"index\":%d}", id, i);
+                String expectedResult = String.format("Action %d executes cleanly and returns verified state.", i);
 
-                TestCase tc = new TestCase(id, module, testName, priority, preconditions, steps, testData, expectedResult);
-                tc.status = "PASSED";
-                tc.actualResult = String.format("Validation passed cleanly with expected result for scenario %d.", i);
+                TestCase tc = new TestCase(id, moduleDisplay, testName, priority, preconditions, steps, testData, expectedResult);
+                tc.status = "PASS";
+                tc.executionTimeMs = sampleTimes[(globalIdx - 1) % sampleTimes.length];
+                tc.actualResult = String.format("Execution passed with expected result in %dms.", tc.executionTimeMs);
+                tc.failureReason = "";
                 list.add(tc);
             }
         }

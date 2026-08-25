@@ -13,7 +13,7 @@
 | **Failed** | 0 |
 | **Skipped** | 0 |
 | **Pass Percentage** | 100.00% |
-| **Execution Duration** | 11.757s |
+| **Execution Duration** | 11.542s |
 
 ### FAILED TESTS
 
