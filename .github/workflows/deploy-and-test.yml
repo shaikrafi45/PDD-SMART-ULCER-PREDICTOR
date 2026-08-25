@@ -9,15 +9,10 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   deploy-and-e2e-test:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/
     
     steps:
       # Stage 1: Repository Checkout
