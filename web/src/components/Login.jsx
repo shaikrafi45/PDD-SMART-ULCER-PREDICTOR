@@ -32,15 +32,17 @@ export function Login({ onBack, onLoginSuccess, onForgotPasswordClick, onRegiste
     return (
         <section id="login-screen" className="screen active">
             <div className="auth-container">
-                <div className="back-bar">
-                    <button className="btn-back btn-back-dark" onClick={onBack} disabled={isLoading}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12,19 5,12 12,5"></polyline>
-                        </svg>
-                        <span>Back</span>
-                    </button>
-                </div>
+                {onBack && (
+                    <div className="back-bar">
+                        <button className="btn-back btn-back-dark" onClick={onBack} disabled={isLoading}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12,19 5,12 12,5"></polyline>
+                            </svg>
+                            <span>Back</span>
+                        </button>
+                    </div>
+                )}
                 
                 <div className="logo-badge">
                     <img src={appLogo} alt="Logo" />

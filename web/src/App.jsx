@@ -63,13 +63,9 @@ export function App() {
             localStorage.setItem('mock_history', JSON.stringify([]));
         }
 
-        // Splash screen auto transition
+        // Splash screen auto transition -> directly to Login screen
         setTimeout(() => {
-            if (session && initialUser) {
-                navigateTo('dashboard', [], 'splash');
-            } else {
-                navigateTo('disclaimer', [], 'splash');
-            }
+            navigateTo('login', [], 'splash');
         }, CONFIG.splashDelay);
     }, []);
 
@@ -367,7 +363,7 @@ export function App() {
             case 'login':
                 return (
                     <Login 
-                        onBack={() => navigateBack('disclaimer')}
+                        onBack={navigationStack.length > 0 ? () => navigateBack() : null}
                         onLoginSuccess={handleLoginSuccess}
                         onForgotPasswordClick={() => navigateTo('forgot-password')}
                         onRegisterClick={() => navigateTo('register')}
