@@ -40,6 +40,7 @@ public class ExcelReporter {
             generateFilterReport(testCases, "PASSED", new File(dir, "Passed_Test_Cases.xlsx"));
             generateFilterReport(testCases, "FAILED", new File(dir, "Failed_Test_Cases.xlsx"));
             generateSummaryReport(testCases, new File(dir, "Execution_Summary.xlsx"));
+            generateSummaryReport(testCases, new File(dir, "Summary_Report.xlsx"));
             System.out.println("Excel reports generated successfully with exact enterprise styling in: " + dir.getAbsolutePath());
         } catch (Exception e) {
             System.err.println("Failed to write Excel reports: " + e.getMessage());

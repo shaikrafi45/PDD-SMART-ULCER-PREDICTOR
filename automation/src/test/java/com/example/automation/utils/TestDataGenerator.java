@@ -53,16 +53,20 @@ public class TestDataGenerator {
 
     public static void generateSeleniumTestCases(String filePath) throws IOException {
         Map<String, Integer> dist = new HashMap<>();
-        dist.put("Web Authentication", 35);
-        dist.put("Web Registration", 25);
-        dist.put("Ulcer Image Upload & Analysis", 40);
-        dist.put("AI Prediction Result Dashboard", 30);
-        dist.put("Patient History & Records", 30);
-        dist.put("Precautions & Care Guidelines", 25);
-        dist.put("Responsive UI & Viewport Scaling", 25);
-        dist.put("Form Validation & Error States", 30);
-        dist.put("Session Persistence & Profile", 30);
-        dist.put("Navigation & Route Guards", 30);
+        dist.put("Authentication", 40);
+        dist.put("Authorization", 40);
+        dist.put("Navigation", 30);
+        dist.put("UI Validation", 50);
+        dist.put("Forms", 50);
+        dist.put("CRUD Operations", 50);
+        dist.put("Input Validation", 40);
+        dist.put("Error Handling", 20);
+        dist.put("Session Management", 20);
+        dist.put("File Upload", 20);
+        dist.put("Accessibility", 20);
+        dist.put("Responsive Design", 20);
+        dist.put("Performance Smoke Tests", 20);
+        dist.put("Regression", 50);
         writeSuiteFile(filePath, "SEL", dist);
     }
 
