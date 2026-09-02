@@ -28,8 +28,8 @@ try {
 
     $historyItems = [];
     while ($row = $stmt->fetch()) {
-        // Format ISO Date for Android compatibility
-        $isoDate = date('Y-m-d\TH:i:s\Z', strtotime($row['created_at']));
+        $rawDate = $row['created_at'];
+        $formattedDate = !empty($rawDate) ? $rawDate : date('Y-m-d H:i:s');
         
         $rawImage = $row['image_path'];
         $imagePath = $rawImage;
@@ -43,7 +43,8 @@ try {
             "result" => $row['result'],
             "confidence" => (float)$row['confidence'],
             "image_path" => $imagePath,
-            "date" => $isoDate
+            "date" => $formattedDate,
+            "created_at" => $formattedDate
         ];
     }
 

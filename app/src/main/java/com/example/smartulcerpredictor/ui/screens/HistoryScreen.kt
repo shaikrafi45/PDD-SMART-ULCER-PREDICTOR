@@ -32,21 +32,34 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun formatIsoDate(isoDate: String): String {
+fun formatIsoDate(isoDate: String?): String {
+    if (isoDate.isNullOrBlank()) return "Recently"
     return try {
-        // Handle PHP datetime format or standard ISO
-        val inputFormat = if (isoDate.contains("T")) {
-            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()).apply {
-                timeZone = TimeZone.getTimeZone("UTC")
-            }
-        } else {
-            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val cleanDate = isoDate.trim()
+        val formats = listOf(
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()),
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()),
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()),
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()),
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        )
+        
+        var parsedDate: Date? = null
+        for (fmt in formats) {
+            try {
+                parsedDate = fmt.parse(cleanDate)
+                if (parsedDate != null) break
+            } catch (_: Exception) {}
         }
-        val date = inputFormat.parse(isoDate)
-        val outputFormat = SimpleDateFormat("MMM dd, yyyy, hh:mm a", Locale.getDefault())
-        outputFormat.format(date!!)
+        
+        if (parsedDate != null) {
+            val outputFormat = SimpleDateFormat("EEEE, dd MMM yyyy • hh:mm a", Locale.getDefault())
+            outputFormat.format(parsedDate)
+        } else {
+            cleanDate
+        }
     } catch (e: Exception) {
-        isoDate // Fallback to original if parsing fails
+        isoDate ?: "Recently"
     }
 }
 
@@ -210,13 +223,14 @@ fun HistoryCard(item: HistoryNetworkItem) {
                     imageVector = Icons.Default.CalendarMonth,
                     contentDescription = null,
                     modifier = Modifier.size(20.dp),
-                    tint = Color.LightGray
+                    tint = Color(0xFF1976D2)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Date: ${formatIsoDate(item.date)}",
-                    color = Color.Gray,
-                    fontSize = 14.sp
+                    text = "Date & Time: ${formatIsoDate(item.date)}",
+                    color = Color(0xFF424242),
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Medium
                 )
             }
         }

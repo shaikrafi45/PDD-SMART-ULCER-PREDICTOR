@@ -37,12 +37,20 @@ export function History({ onBack, getHistoryRequest, showToast, userId, apiBaseU
     }, [userId]);
 
     const formatIsoDate = (dateStr) => {
-        if (!dateStr) return '';
+        if (!dateStr) return 'Recently';
         try {
             const d = new Date(dateStr.replace(' ', 'T'));
             if (isNaN(d.getTime())) return dateStr;
             
-            const options = { month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+            const options = { 
+                weekday: 'long', 
+                month: 'short', 
+                day: '2-digit', 
+                year: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: true 
+            };
             return d.toLocaleDateString('en-US', options);
         } catch (e) {
             return dateStr;
