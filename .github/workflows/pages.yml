@@ -40,6 +40,13 @@ jobs:
           touch dist/.nojekyll
           cd ..
 
+      - name: Deploy to gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: web/dist
+          branch: gh-pages
+          clean: true
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -51,6 +58,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
 
       - name: '👉 Live App URL: https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/'
         run: |
