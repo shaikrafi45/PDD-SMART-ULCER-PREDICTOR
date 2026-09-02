@@ -13,6 +13,14 @@ import Precautions from './components/Precautions';
 import History from './components/History';
 import ProfileModal from './components/ProfileModal';
 import UlcerClassifier from './utils/classifier';
+import { 
+    initializeSyncedStore, 
+    authenticateUser, 
+    registerUser, 
+    resetPassword, 
+    getUserHistory, 
+    addHistoryRecord 
+} from './utils/syncedDatabase';
 
 // CSS Styling
 import './css/style.css';
@@ -75,11 +83,7 @@ export function App() {
     // Mount logic: initialize classifier & handle unauthenticated splash
     useEffect(() => {
         classifierRef.current = new UlcerClassifier();
-
-        // Clear any old mock cache to force live MySQL database usage
-        localStorage.removeItem('mock_users');
-        localStorage.removeItem('mock_history');
-        localStorage.removeItem('mock_last_reset_email');
+        initializeSyncedStore();
 
         // If not logged in and starting from splash screen, transition to login
         if (!savedSession && currentScreen === 'splash') {
@@ -231,52 +235,49 @@ export function App() {
     };
 
     /* ==========================================
-       LOCAL MOCK HANDLERS
+       LOCAL SYNCED HANDLERS (SEAMLESS OFFLINE & WEB)
        ========================================== */
 
     const handleMockRequest = (endpoint, payload) => {
-        const users = JSON.parse(localStorage.getItem('mock_users')) || [];
-        
         if (endpoint === 'register.php') {
-            const existing = users.find(u => u.email === payload.email);
-            if (existing) {
-                return { status: 'error', message: 'Email already registered.' };
+            const regRes = registerUser(payload.name, payload.email, payload.password);
+            if (regRes.success) {
+                return {
+                    status: 'success',
+                    message: 'Registration successful!',
+                    user: regRes.user
+                };
             }
-            
-            const newUser = {
-                id: users.length + 1,
-                name: payload.name,
-                email: payload.email,
-                password: payload.password
-            };
-            users.push(newUser);
-            localStorage.setItem('mock_users', JSON.stringify(users));
-            
             return {
-                status: 'success',
-                message: 'Registration successful!',
-                user: { id: newUser.id, name: newUser.name, email: newUser.email }
+                status: 'error',
+                message: regRes.message || 'Email already registered.'
             };
         }
         
         if (endpoint === 'login.php') {
-            const user = users.find(u => u.email === payload.email && u.password === payload.password);
-            if (!user) {
-                return { status: 'error', message: 'Invalid credentials.' };
+            const authRes = authenticateUser(payload.email, payload.password);
+            if (authRes.success) {
+                return {
+                    status: 'success',
+                    message: 'Login successful!',
+                    user: authRes.user
+                };
             }
             return {
-                status: 'success',
-                message: 'Login successful!',
-                user: { id: user.id, name: user.name, email: user.email }
+                status: 'error',
+                message: authRes.message || 'Invalid credentials.'
             };
         }
         
         if (endpoint === 'forgot_password.php') {
-            const user = users.find(u => u.email === payload.email);
+            const cleanEmail = (payload.email || '').trim().toLowerCase();
+            const storedUsers = JSON.parse(localStorage.getItem('synced_users') || '[]');
+            const user = storedUsers.find(u => (u.email || '').toLowerCase() === cleanEmail);
             if (!user) {
                 return { status: 'error', message: 'Email address not found.' };
             }
-            localStorage.setItem('mock_last_reset_email', payload.email);
+            setLastResetEmail(cleanEmail);
+            localStorage.setItem('smart_ulcer_last_reset_email', cleanEmail);
             return {
                 status: 'success',
                 message: 'Verification code sent!',
@@ -285,27 +286,22 @@ export function App() {
         }
         
         if (endpoint === 'reset_password.php') {
-            const resetEmail = localStorage.getItem('mock_last_reset_email');
+            const resetEmail = payload.email || lastResetEmail || localStorage.getItem('smart_ulcer_last_reset_email');
             if (!resetEmail) {
-                return { status: 'error', message: 'Session expired.' };
+                return { status: 'error', message: 'Session expired. Please try again.' };
             }
             
-            if (payload.reset_code !== '123456') {
-                return { status: 'error', message: 'Invalid verification code.' };
+            const resetRes = resetPassword(resetEmail, payload.new_password || payload.password);
+            if (resetRes.success) {
+                localStorage.removeItem('smart_ulcer_last_reset_email');
+                return {
+                    status: 'success',
+                    message: 'Password updated successfully!'
+                };
             }
-            
-            const userIdx = users.findIndex(u => u.email === resetEmail);
-            if (userIdx === -1) {
-                return { status: 'error', message: 'User not found.' };
-            }
-            
-            users[userIdx].password = payload.new_password;
-            localStorage.setItem('mock_users', JSON.stringify(users));
-            localStorage.removeItem('mock_last_reset_email');
-            
             return {
-                status: 'success',
-                message: 'Password updated successfully!'
+                status: 'error',
+                message: resetRes.message || 'Password reset failed.'
             };
         }
         
@@ -313,41 +309,25 @@ export function App() {
     };
 
     const handleMockUpload = (imageBlob, resultLabel, confidence, imageBase64) => {
-        const history = JSON.parse(localStorage.getItem('mock_history')) || [];
-        
-        const historyItem = {
-            id: Date.now().toString(),
-            result: resultLabel,
-            confidence: parseFloat(confidence),
-            image_path: imageBase64 || '',
-            date: new Date().toISOString(),
-            user_id: currentUser ? currentUser.id : 1
-        };
-        
-        history.unshift(historyItem);
-        try {
-            localStorage.setItem('mock_history', JSON.stringify(history));
-        } catch (e) {
-            console.warn("LocalStorage storage full, keeping latest 5 items", e);
-            if (history.length > 5) {
-                localStorage.setItem('mock_history', JSON.stringify(history.slice(0, 5)));
-            }
-        }
+        const record = addHistoryRecord(
+            currentUser ? currentUser.id : 1,
+            resultLabel,
+            confidence,
+            imageBase64
+        );
         
         return {
             status: 'success',
-            message: 'Scan saved locally',
-            data: historyItem
+            message: 'Scan saved to history',
+            data: record
         };
     };
 
     const handleMockGetHistory = (userId) => {
-        const history = JSON.parse(localStorage.getItem('mock_history')) || [];
-        const userHistory = history.filter(item => !userId || item.user_id === userId || item.user_id === 1);
-        userHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const history = getUserHistory(userId || (currentUser ? currentUser.id : null));
         return {
             status: 'success',
-            history: userHistory
+            history: history
         };
     };
 
