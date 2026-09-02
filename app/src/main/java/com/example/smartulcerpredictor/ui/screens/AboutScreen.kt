@@ -138,7 +138,25 @@ fun AboutScreen(
                 title = "Epithelialisation (pink, new skin)",
                 treatment = "Treatment: Protect, avoid trauma.\n• Key healing indicator."
             )
-            
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            val context = androidx.compose.ui.platform.LocalContext.current
+            OutlinedButton(
+                onClick = {
+                    val intent = android.content.Intent(
+                        android.content.Intent.ACTION_VIEW,
+                        android.net.Uri.parse("https://shaikrafi45.github.io/PDD-SMART-ULCER-PREDICTOR/")
+                    )
+                    context.startActivity(intent)
+                },
+                modifier = Modifier.fillMaxWidth().height(48.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF1976D2))
+            ) {
+                Text(text = "🌐 Open Live Web App Portal", fontWeight = FontWeight.Bold, fontSize = 15.sp)
+            }
+
             Spacer(modifier = Modifier.height(32.dp))
         }
     }
