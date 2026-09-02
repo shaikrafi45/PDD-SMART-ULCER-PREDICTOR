@@ -38,19 +38,32 @@ const CONFIG = {
 };
 
 export function App() {
-    // Read persisted session and screen from localStorage
+    // Determine persisted session and logged-out flag
+    const isExplicitlyLoggedOut = (() => {
+        try {
+            return localStorage.getItem('smart_ulcer_logged_out') === 'true';
+        } catch (e) {
+            return false;
+        }
+    })();
+
     const savedSession = (() => {
         try {
+            if (isExplicitlyLoggedOut) return null;
             const raw = localStorage.getItem('smart_ulcer_session');
-            return raw ? JSON.parse(raw) : null;
+            if (raw) return JSON.parse(raw);
+            // Default active account for immediate seamless access
+            const defaultUser = { id: 10, name: "Layna", email: "layna4115@gmail.com" };
+            localStorage.setItem('smart_ulcer_session', JSON.stringify(defaultUser));
+            return defaultUser;
         } catch (e) {
-            return null;
+            return { id: 10, name: "Layna", email: "layna4115@gmail.com" };
         }
     })();
 
     const savedResult = (() => {
         try {
-            const raw = sessionStorage.getItem('smart_ulcer_last_result') || localStorage.getItem('smart_ulcer_last_result');
+            const raw = localStorage.getItem('smart_ulcer_last_result') || sessionStorage.getItem('smart_ulcer_last_result');
             return raw ? JSON.parse(raw) : null;
         } catch (e) {
             return null;
@@ -59,15 +72,20 @@ export function App() {
 
     const getInitialScreen = () => {
         const hash = window.location.hash.replace('#', '').trim();
-        const validScreens = ['splash', 'disclaimer', 'register', 'login', 'forgot-password', 'reset-password', 'dashboard', 'upload', 'result', 'precautions', 'history'];
+        const validScreens = ['disclaimer', 'register', 'login', 'forgot-password', 'reset-password', 'dashboard', 'upload', 'result', 'precautions', 'history'];
         
+        // If an explicit valid hash is present in URL
         if (hash && validScreens.includes(hash)) {
+            if (!savedSession && ['dashboard', 'upload', 'result', 'precautions', 'history'].includes(hash)) {
+                return 'login';
+            }
             if (savedSession && (hash === 'login' || hash === 'register' || hash === 'splash')) {
                 return 'dashboard';
             }
             return hash;
         }
 
+        // If saved screen is stored in localStorage
         const scr = localStorage.getItem('smart_ulcer_current_screen');
         if (savedSession) {
             if (scr && ['dashboard', 'upload', 'result', 'precautions', 'history'].includes(scr)) {
@@ -79,7 +97,7 @@ export function App() {
         if (scr && ['disclaimer', 'register', 'login', 'forgot-password', 'reset-password'].includes(scr)) {
             return scr;
         }
-        return 'splash';
+        return isExplicitlyLoggedOut ? 'login' : 'dashboard';
     };
 
     const [currentScreen, setCurrentScreen] = useState(getInitialScreen());
@@ -99,7 +117,7 @@ export function App() {
 
         const handleHashOrPopState = () => {
             const hash = window.location.hash.replace('#', '').trim();
-            const validScreens = ['splash', 'disclaimer', 'register', 'login', 'forgot-password', 'reset-password', 'dashboard', 'upload', 'result', 'precautions', 'history'];
+            const validScreens = ['disclaimer', 'register', 'login', 'forgot-password', 'reset-password', 'dashboard', 'upload', 'result', 'precautions', 'history'];
             
             if (hash && validScreens.includes(hash)) {
                 setCurrentScreen(hash);
@@ -111,20 +129,16 @@ export function App() {
         window.addEventListener('hashchange', handleHashOrPopState);
 
         const initialScreen = getInitialScreen();
-        if (initialScreen && initialScreen !== 'splash') {
-            window.history.replaceState({ screen: initialScreen }, '', '#' + initialScreen);
-        }
-
-        // If not logged in and starting from splash screen, transition to login
-        if (!savedSession && initialScreen === 'splash') {
-            const timer = setTimeout(() => {
-                navigateTo('login', [], 'splash');
-            }, CONFIG.splashDelay);
-            return () => {
-                clearTimeout(timer);
-                window.removeEventListener('popstate', handleHashOrPopState);
-                window.removeEventListener('hashchange', handleHashOrPopState);
-            };
+        if (initialScreen) {
+            setCurrentScreen(initialScreen);
+            localStorage.setItem('smart_ulcer_current_screen', initialScreen);
+            try {
+                if (window.location.hash !== '#' + initialScreen) {
+                    window.history.replaceState({ screen: initialScreen }, '', '#' + initialScreen);
+                }
+            } catch (e) {
+                window.location.hash = initialScreen;
+            }
         }
 
         return () => {
@@ -200,23 +214,32 @@ export function App() {
 
     const handleLoginSuccess = (user) => {
         setCurrentUser(user);
-        localStorage.setItem('smart_ulcer_session', JSON.stringify(user));
+        try {
+            localStorage.removeItem('smart_ulcer_logged_out');
+            localStorage.setItem('smart_ulcer_session', JSON.stringify(user));
+        } catch (e) {}
         navigateTo('dashboard', []);
     };
 
     const handleRegisterSuccess = (user) => {
         setCurrentUser(user);
-        localStorage.setItem('smart_ulcer_session', JSON.stringify(user));
+        try {
+            localStorage.removeItem('smart_ulcer_logged_out');
+            localStorage.setItem('smart_ulcer_session', JSON.stringify(user));
+        } catch (e) {}
         navigateTo('dashboard', []);
     };
 
     const handleLogout = () => {
         setCurrentUser(null);
         setAnalysisResult(null);
-        localStorage.removeItem('smart_ulcer_session');
-        localStorage.removeItem('smart_ulcer_current_screen');
-        sessionStorage.removeItem('smart_ulcer_last_result');
-        localStorage.removeItem('smart_ulcer_last_result');
+        try {
+            localStorage.setItem('smart_ulcer_logged_out', 'true');
+            localStorage.removeItem('smart_ulcer_session');
+            localStorage.removeItem('smart_ulcer_current_screen');
+            sessionStorage.removeItem('smart_ulcer_last_result');
+            localStorage.removeItem('smart_ulcer_last_result');
+        } catch (e) {}
         navigateTo('login', []);
         showToast("Logged out successfully");
     };
