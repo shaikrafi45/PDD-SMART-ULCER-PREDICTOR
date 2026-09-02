@@ -1,0 +1,1290 @@
+[
+  {
+    "id": 161,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 87.5859,
+    "image_path": "http://192.168.1.20/smart_ulcer_api/uploads/b2362bdba783437260deeedb3f33939d.jpg",
+    "created_at": "2026-09-02 20:23:15"
+  },
+  {
+    "id": 160,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 98.5,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/710ec97107bd0a4d3699acb7c789ab43.jpg",
+    "created_at": "2026-09-02 14:47:55"
+  },
+  {
+    "id": 159,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 84,
+    "image_path": "http://10.85.130.155/smart_ulcer_api/uploads/c31cd0422a686f81085bc087f8fd37a1.jpg",
+    "created_at": "2026-09-02 14:43:14"
+  },
+  {
+    "id": 158,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 98.5,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/630693ee0fb5af7657e341da912a7c0b.jpg",
+    "created_at": "2026-09-02 14:40:15"
+  },
+  {
+    "id": 157,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 98.5,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/e7232f49b59bd1b3501f37d526514d20.jpg",
+    "created_at": "2026-09-02 14:39:33"
+  },
+  {
+    "id": 156,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 98.5,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/6401049148cc714d674663a81388787d.jpg",
+    "created_at": "2026-09-02 14:38:27"
+  },
+  {
+    "id": 155,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://10.85.130.155/smart_ulcer_api/uploads/f4e552e93ebfbe60ff399fb7f51b809c.jpg",
+    "created_at": "2026-09-02 14:37:58"
+  },
+  {
+    "id": 154,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 91.612,
+    "image_path": "http://10.85.130.155/smart_ulcer_api/uploads/455ea6d98ef2ee1d16f6994faf258067.jpg",
+    "created_at": "2026-09-02 14:34:15"
+  },
+  {
+    "id": 153,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 98.5,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/8e4a169b766dd3acd3dba3720af0575b.jpg",
+    "created_at": "2026-09-02 14:32:53"
+  },
+  {
+    "id": 152,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 93.7447,
+    "image_path": "http://10.85.130.155/smart_ulcer_api/uploads/cbb0bb9f1a219aeaf3b3b3014c4fd8e8.jpg",
+    "created_at": "2026-09-02 14:31:15"
+  },
+  {
+    "id": 151,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 88.0558,
+    "image_path": "http://10.85.130.155/smart_ulcer_api/uploads/2cdc41c7a20b147b0f3c732394d029e8.jpg",
+    "created_at": "2026-09-02 14:30:02"
+  },
+  {
+    "id": 150,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/0a6a67aca3331ff4b0ffbfdc568bcd78.jpg",
+    "created_at": "2026-09-02 14:27:42"
+  },
+  {
+    "id": 149,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 91.612,
+    "image_path": "http://10.85.130.155/smart_ulcer_api/uploads/0f700be8bf4208f2093cb7e35e36be80.jpg",
+    "created_at": "2026-09-02 14:26:59"
+  },
+  {
+    "id": 148,
+    "user_id": 10,
+    "result": "Slough",
+    "confidence": 94.5296,
+    "image_path": "http://10.85.130.155/smart_ulcer_api/uploads/ec85fd2008f6e6ba671d40678dd12aca.jpg",
+    "created_at": "2026-09-02 14:24:58"
+  },
+  {
+    "id": 147,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 98.27,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/f3cb4e3866d2191521dc47b41ac2ec46.jpg",
+    "created_at": "2026-09-02 14:11:52"
+  },
+  {
+    "id": 146,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 98.5,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/9b46b8cd831bceb9173cf86c694bc3d6.jpg",
+    "created_at": "2026-09-02 14:11:38"
+  },
+  {
+    "id": 145,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 91.37,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/9f38e64ceab26f6e3225b1be219e1769.jpg",
+    "created_at": "2026-09-02 14:09:18"
+  },
+  {
+    "id": 144,
+    "user_id": 2,
+    "result": "Epithelialisation",
+    "confidence": 86.62,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/dabc8c54f8ca7a48af59ce54f9ecfb8f.jpg",
+    "created_at": "2026-09-02 14:08:50"
+  },
+  {
+    "id": 143,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 88.82,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/5ca79205d124cfecc1ebe1d06c35a856.jpg",
+    "created_at": "2026-09-02 14:08:22"
+  },
+  {
+    "id": 142,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 90.0508,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/693be40a723fe7f2130afa4d0b659530.jpg",
+    "created_at": "2026-09-02 11:58:53"
+  },
+  {
+    "id": 141,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 93.8521,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/c4a2d7b9cee417f90a22af4ab40d9168.jpg",
+    "created_at": "2026-09-02 11:58:45"
+  },
+  {
+    "id": 140,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 84,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/a9cc2c4bd3ee04ce87141583bb53eb4a.jpg",
+    "created_at": "2026-09-02 11:58:40"
+  },
+  {
+    "id": 139,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 92.0588,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/eb39ea54a400a2edf3e62ee985a0e66e.jpg",
+    "created_at": "2026-09-02 11:58:34"
+  },
+  {
+    "id": 138,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 87.5859,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/b2adcce392030617646004a9f6c5db74.jpg",
+    "created_at": "2026-09-02 11:58:30"
+  },
+  {
+    "id": 137,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 85.1738,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/3759d39f2123bbec2426791fa906f520.jpg",
+    "created_at": "2026-09-02 11:58:24"
+  },
+  {
+    "id": 136,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 94.9267,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/827531b1dbcddb5853a31e627bb6385c.jpg",
+    "created_at": "2026-09-02 11:58:19"
+  },
+  {
+    "id": 135,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 98.5,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/a44cf72e49027c25abd56a985b584faa.jpg",
+    "created_at": "2026-09-02 11:58:09"
+  },
+  {
+    "id": 134,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 87.5859,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/249c42c89c069be58ec9552726a1c921.jpg",
+    "created_at": "2026-09-02 11:58:05"
+  },
+  {
+    "id": 133,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 87.4393,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/e4c95199b2f0f247b3a258669f16c694.jpg",
+    "created_at": "2026-09-02 11:58:00"
+  },
+  {
+    "id": 132,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 92.0588,
+    "image_path": "http://192.168.137.148/smart_ulcer_api/uploads/1906475b93d7ad2552fcd534e8d2a425.jpg",
+    "created_at": "2026-09-02 11:57:55"
+  },
+  {
+    "id": 131,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 94.2236,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/3a76f50cbaf08c1741db9b32c694e003.jpg",
+    "created_at": "2026-09-02 10:54:40"
+  },
+  {
+    "id": 130,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 97.1741,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/7bf1e11c71d209fed201c4a9aa238f01.jpg",
+    "created_at": "2026-09-02 10:54:26"
+  },
+  {
+    "id": 129,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 97.6419,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/f93e48f4fba02c3ac96f88de82967909.jpg",
+    "created_at": "2026-09-02 10:54:04"
+  },
+  {
+    "id": 128,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 95.4576,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/b3310703d54724b77f62265a8deea455.jpg",
+    "created_at": "2026-09-02 10:39:44"
+  },
+  {
+    "id": 127,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 95.4492,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/6683456f2c70e7293ef636749009e304.jpg",
+    "created_at": "2026-09-02 10:39:38"
+  },
+  {
+    "id": 126,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 90.0065,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/42d1cbfe982faf60f4bb563c6822f4fc.jpg",
+    "created_at": "2026-09-02 10:39:30"
+  },
+  {
+    "id": 125,
+    "user_id": 2,
+    "result": "Necrotic",
+    "confidence": 98.5,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/658bc920ab74f4bd300b1698ee6f512a.jpg",
+    "created_at": "2026-09-02 10:39:10"
+  },
+  {
+    "id": 124,
+    "user_id": 2,
+    "result": "Granulation",
+    "confidence": 87.798,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/398d62b5fbee9a37a14ffe3c6adf9ecb.jpg",
+    "created_at": "2026-09-02 10:32:50"
+  },
+  {
+    "id": 123,
+    "user_id": 2,
+    "result": "Granulation",
+    "confidence": 95.1953,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/0760bd4f1aac0dac711ad51f3807c428.jpg",
+    "created_at": "2026-09-02 10:32:45"
+  },
+  {
+    "id": 122,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 91.8123,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/12886f8a331021f08fd1de12e2f728a7.jpg",
+    "created_at": "2026-09-02 10:32:33"
+  },
+  {
+    "id": 121,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 95.1595,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/22b75f61a623d04e495b4625938bb3d0.jpg",
+    "created_at": "2026-09-02 10:32:27"
+  },
+  {
+    "id": 120,
+    "user_id": 2,
+    "result": "Necrotic",
+    "confidence": 97.4645,
+    "image_path": "http://192.168.137.143/smart_ulcer_api/uploads/00199739eacc0bcfed4f7a7044ab17e8.jpg",
+    "created_at": "2026-09-02 10:31:39"
+  },
+  {
+    "id": 119,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 95.241,
+    "image_path": "http://192.168.1.20/smart_ulcer_api/uploads/94d87f8ebe7ee35baa1c1ad5b3a91655.jpg",
+    "created_at": "2026-08-29 18:48:03"
+  },
+  {
+    "id": 118,
+    "user_id": 2,
+    "result": "Granulation",
+    "confidence": 86.4166,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/e3c349fcaabe827d678dd82d1178c6f4.jpg",
+    "created_at": "2026-08-28 11:07:09"
+  },
+  {
+    "id": 117,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 93.401,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/fcafcf81565a0e8e48c78dc7b7bdc137.jpg",
+    "created_at": "2026-08-28 11:07:03"
+  },
+  {
+    "id": 116,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 86.4095,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/d5e27535ba2fbaf6df9774c16900a8a0.jpg",
+    "created_at": "2026-08-28 11:06:58"
+  },
+  {
+    "id": 115,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 93.2741,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/48a4bbf748c6d9d74f794c10c11e4dc5.jpg",
+    "created_at": "2026-08-28 11:06:53"
+  },
+  {
+    "id": 114,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 95.241,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/da7d0bf342b6ff88cc99ceadc3c94edd.jpg",
+    "created_at": "2026-08-28 11:06:50"
+  },
+  {
+    "id": 113,
+    "user_id": 2,
+    "result": "Necrotic",
+    "confidence": 89.4938,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/11d020aae61ac6f565fddf35397a0948.jpg",
+    "created_at": "2026-08-28 11:06:43"
+  },
+  {
+    "id": 112,
+    "user_id": 2,
+    "result": "Granulation",
+    "confidence": 86.4166,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/d2b7dd17587b490307de52a323070e37.jpg",
+    "created_at": "2026-08-28 11:06:30"
+  },
+  {
+    "id": 111,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 86.4095,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/af6888f8a2ebf9f460bbeef11c7ad905.jpg",
+    "created_at": "2026-08-28 11:06:25"
+  },
+  {
+    "id": 110,
+    "user_id": 2,
+    "result": "Necrotic",
+    "confidence": 85.7069,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/2d5cbcfb558ef6c6377b209c376c4ec2.jpg",
+    "created_at": "2026-08-28 11:06:20"
+  },
+  {
+    "id": 109,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 95.241,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/2095d505457df8704a7a7ddd3cc67468.jpg",
+    "created_at": "2026-08-28 11:06:06"
+  },
+  {
+    "id": 108,
+    "user_id": 2,
+    "result": "Necrotic",
+    "confidence": 85.7069,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/0aec0c837674deca220b21dca72eeed7.jpg",
+    "created_at": "2026-08-28 11:05:43"
+  },
+  {
+    "id": 107,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 95.8608,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/2d3f86243653686ec9374a39584d86e1.jpg",
+    "created_at": "2026-08-28 11:04:44"
+  },
+  {
+    "id": 106,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 92.0834,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/fc2bfa5c874fdedf8c181bb39f1e2599.jpg",
+    "created_at": "2026-08-28 11:04:31"
+  },
+  {
+    "id": 105,
+    "user_id": 2,
+    "result": "Necrotic",
+    "confidence": 98.5,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/c503fec4968ac4b833ae5791dce67bbb.jpg",
+    "created_at": "2026-08-28 11:04:21"
+  },
+  {
+    "id": 104,
+    "user_id": 2,
+    "result": "Normal",
+    "confidence": 82.8168,
+    "image_path": "http://10.85.130.42/smart_ulcer_api/uploads/0804a7df8e6839605b63eb938278988a.jpg",
+    "created_at": "2026-08-27 10:11:01"
+  },
+  {
+    "id": 103,
+    "user_id": 2,
+    "result": "Normal",
+    "confidence": 83.4437,
+    "image_path": "http://10.85.130.42/smart_ulcer_api/uploads/0c48c800445be1973fe61304db05f55d.jpg",
+    "created_at": "2026-08-27 10:10:54"
+  },
+  {
+    "id": 102,
+    "user_id": 2,
+    "result": "Normal",
+    "confidence": 84.4783,
+    "image_path": "http://10.85.130.42/smart_ulcer_api/uploads/d19f9f31c04b0768cae80b317a9042fd.jpg",
+    "created_at": "2026-08-27 10:10:35"
+  },
+  {
+    "id": 101,
+    "user_id": 2,
+    "result": "Normal",
+    "confidence": 83.8176,
+    "image_path": "http://10.85.130.42/smart_ulcer_api/uploads/28129b77918c7eb5552e2230862985d3.jpg",
+    "created_at": "2026-08-27 10:10:25"
+  },
+  {
+    "id": 100,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.6719,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/67c7b75728ee4b31a9cf3980621dbcb1.jpg",
+    "created_at": "2026-08-24 15:22:42"
+  },
+  {
+    "id": 99,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.9216,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/4644191506f54b69a18096b39dfc6340.jpg",
+    "created_at": "2026-08-24 15:12:58"
+  },
+  {
+    "id": 98,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/e5859112a265c57ba8655b4db7628e9a.jpg",
+    "created_at": "2026-08-24 15:12:44"
+  },
+  {
+    "id": 97,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 73.0136,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/47f179915c9d2175cf604af3dbac5b1e.jpg",
+    "created_at": "2026-08-24 15:12:36"
+  },
+  {
+    "id": 96,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/ce3c178be7fb72fbd9d583cd670642b7.jpg",
+    "created_at": "2026-08-24 15:12:26"
+  },
+  {
+    "id": 95,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 81.19,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/41de9bbda3b7862b60a6f273a28011bf.jpg",
+    "created_at": "2026-08-24 14:51:27"
+  },
+  {
+    "id": 94,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 84.45,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/c6acd16c724ab3eca8b6477306ed42cb.jpg",
+    "created_at": "2026-08-24 14:50:59"
+  },
+  {
+    "id": 93,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/036680cfd2ff368edd52adf780b483e1.jpg",
+    "created_at": "2026-08-24 14:46:53"
+  },
+  {
+    "id": 92,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/98971ae487d32dd519ba2303621e1244.jpg",
+    "created_at": "2026-08-24 14:25:16"
+  },
+  {
+    "id": 91,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/72c65a0fbd4f7fa022cca92d50f68c06.jpg",
+    "created_at": "2026-08-24 14:11:40"
+  },
+  {
+    "id": 90,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/52b09d53f62c8f23f0f1b344ddfcdb7d.jpg",
+    "created_at": "2026-08-24 14:11:24"
+  },
+  {
+    "id": 89,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/a553aaec732fddc387574a34d2624858.jpg",
+    "created_at": "2026-08-24 14:10:59"
+  },
+  {
+    "id": 88,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/4bceae60e988602720858aa68e223688.jpg",
+    "created_at": "2026-08-05 15:48:30"
+  },
+  {
+    "id": 87,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.9817,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/8c623cdba106f3c0a46d5f964937552c.jpg",
+    "created_at": "2026-08-05 15:48:12"
+  },
+  {
+    "id": 86,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/afbf8a192607566317fee53990cb5bc0.jpg",
+    "created_at": "2026-08-05 15:48:07"
+  },
+  {
+    "id": 85,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/a9d94d4b67ec64c853b01b70a10145de.jpg",
+    "created_at": "2026-08-05 15:47:58"
+  },
+  {
+    "id": 84,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/a5fcb3ce2762d298fb1a0e45b855d573.jpg",
+    "created_at": "2026-08-05 15:47:48"
+  },
+  {
+    "id": 83,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/a8b12faec8ea0ec096fcce221327043e.jpg",
+    "created_at": "2026-08-05 15:47:22"
+  },
+  {
+    "id": 82,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.9817,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/b430bdfc5b0aabbab771e78e46c3941f.jpg",
+    "created_at": "2026-08-05 15:47:12"
+  },
+  {
+    "id": 81,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/3a9b8f089a64b69c1a1281e4f29d4996.jpg",
+    "created_at": "2026-08-05 15:24:53"
+  },
+  {
+    "id": 80,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/9eaf2c4f9b6aca1393b0aacac5d8b918.jpg",
+    "created_at": "2026-08-05 15:24:46"
+  },
+  {
+    "id": 79,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/ce54592a2437c4253b6d7fc03e1287e5.jpg",
+    "created_at": "2026-08-05 15:24:40"
+  },
+  {
+    "id": 78,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.8818,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/e484d9260c828ed0f16cb003bc2084dd.jpg",
+    "created_at": "2026-08-05 15:24:28"
+  },
+  {
+    "id": 77,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.9868,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/574557592683bebca1554a4c3ad65e48.jpg",
+    "created_at": "2026-08-05 15:24:22"
+  },
+  {
+    "id": 76,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.9817,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/a7a2bee18e196bd476d92df6057707f3.jpg",
+    "created_at": "2026-08-05 15:24:11"
+  },
+  {
+    "id": 75,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/3ca6fc0b7d244afffcb855896d241ce1.jpg",
+    "created_at": "2026-08-05 15:23:59"
+  },
+  {
+    "id": 74,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/77512c5c5fa32da9e75487c9f103021d.jpg",
+    "created_at": "2026-08-05 15:19:36"
+  },
+  {
+    "id": 73,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://localhost:8080/smart_ulcer_api/uploads/070a3985209c2516ed69e4bd341b1f84.jpg",
+    "created_at": "2026-08-05 15:19:06"
+  },
+  {
+    "id": 72,
+    "user_id": 7,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/741d968143de80eb99aebedba078fdc5.jpg",
+    "created_at": "2026-07-01 15:26:03"
+  },
+  {
+    "id": 71,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.7643,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/8014baa4aa6ff514668a4d6e7583031d.jpg",
+    "created_at": "2026-07-01 14:53:29"
+  },
+  {
+    "id": 70,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/da2121050e8734bd32a1991466d1ba36.jpg",
+    "created_at": "2026-07-01 14:52:47"
+  },
+  {
+    "id": 69,
+    "user_id": 7,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/59fae384b4a02d168eb2e977825cbd03.jpg",
+    "created_at": "2026-07-01 13:40:19"
+  },
+  {
+    "id": 68,
+    "user_id": 7,
+    "result": "Necrotic tissue",
+    "confidence": 77.68,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/dcf0990e558616c590207e015ac3a7ff.jpg",
+    "created_at": "2026-07-01 11:57:28"
+  },
+  {
+    "id": 67,
+    "user_id": 7,
+    "result": "Necrotic tissue",
+    "confidence": 93.39,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/e157ad929fb55059230b032c303ecd92.jpg",
+    "created_at": "2026-07-01 11:57:15"
+  },
+  {
+    "id": 66,
+    "user_id": 7,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/72a906248ebbdf19f5cc29393b51f86d.jpg",
+    "created_at": "2026-07-01 11:56:58"
+  },
+  {
+    "id": 65,
+    "user_id": 7,
+    "result": "Necrotic tissue",
+    "confidence": 84.4,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/4735f195769bd64c78c2b53dbff7fd3c.jpg",
+    "created_at": "2026-07-01 11:56:45"
+  },
+  {
+    "id": 64,
+    "user_id": 7,
+    "result": "Necrotic tissue",
+    "confidence": 90.87,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/8ba259ddaa1a48792f4c7bf324e0fd20.jpg",
+    "created_at": "2026-07-01 11:56:26"
+  },
+  {
+    "id": 63,
+    "user_id": 7,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/8aa779dfc6fca93063a59520728d6f32.jpg",
+    "created_at": "2026-07-01 11:56:03"
+  },
+  {
+    "id": 62,
+    "user_id": 7,
+    "result": "Granulation tissue",
+    "confidence": 90.07,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/1d4908e93cc6ee01eb79c41bb53ffc45.jpg",
+    "created_at": "2026-07-01 11:53:54"
+  },
+  {
+    "id": 61,
+    "user_id": 7,
+    "result": "Slough",
+    "confidence": 92.25,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/8354b84ef75553944e0d6493fd31829c.jpg",
+    "created_at": "2026-07-01 11:53:41"
+  },
+  {
+    "id": 60,
+    "user_id": 7,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/8200c6eac67d86a83583ac72fba98294.jpg",
+    "created_at": "2026-07-01 11:53:24"
+  },
+  {
+    "id": 59,
+    "user_id": 7,
+    "result": "Necrotic tissue",
+    "confidence": 93.37,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/5f5900044fdbb2a9c53a42e7f1f95b9f.jpg",
+    "created_at": "2026-07-01 11:48:48"
+  },
+  {
+    "id": 58,
+    "user_id": 7,
+    "result": "Necrotic tissue",
+    "confidence": 78.23,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/a5199d89f18e4e4bec2b626d06a324c8.jpg",
+    "created_at": "2026-07-01 11:47:32"
+  },
+  {
+    "id": 57,
+    "user_id": 7,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/43fe7f572ddc88a973b68ad36cdd1ee4.jpg",
+    "created_at": "2026-07-01 11:47:20"
+  },
+  {
+    "id": 56,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/a0edfe41aaff9d6d7e147cb64c3f6198.jpg",
+    "created_at": "2026-07-01 09:08:56"
+  },
+  {
+    "id": 55,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/2fc766fac0512eabb2b38be527f980e3.jpg",
+    "created_at": "2026-06-30 16:10:57"
+  },
+  {
+    "id": 54,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 80.13,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/5d2c247ec3b1f4f9e4bff4284163961c.jpg",
+    "created_at": "2026-06-09 15:51:12"
+  },
+  {
+    "id": 53,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/19e36e11f1e549a9d3bf2d197d095669.jpg",
+    "created_at": "2026-06-09 15:51:00"
+  },
+  {
+    "id": 52,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/8d5b634a9655aaa10fcca2d9736305ba.jpg",
+    "created_at": "2026-06-09 15:46:16"
+  },
+  {
+    "id": 51,
+    "user_id": 2,
+    "result": "Necrotic tissue",
+    "confidence": 77.82,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/cadc5565f3ffb649c2a02dcf0d9655a2.jpg",
+    "created_at": "2026-06-09 15:46:04"
+  },
+  {
+    "id": 50,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 79.64,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/14857767072d80fe565a5ea703ae3132.jpg",
+    "created_at": "2026-06-09 14:54:51"
+  },
+  {
+    "id": 49,
+    "user_id": 8,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/54fa4a0f7e916c0895a63bd483e671b0.jpg",
+    "created_at": "2026-06-09 14:50:45"
+  },
+  {
+    "id": 48,
+    "user_id": 8,
+    "result": "Slough",
+    "confidence": 88.53,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/71b87615666e4fd06509baf6622654e6.jpg",
+    "created_at": "2026-06-09 14:29:18"
+  },
+  {
+    "id": 47,
+    "user_id": 8,
+    "result": "Unable to Identify",
+    "confidence": 100,
+    "image_path": "http://localhost/smart_ulcer_api/uploads/b4a363d0fd0815dde7d4711c27d614cf.jpg",
+    "created_at": "2026-06-09 14:27:31"
+  },
+  {
+    "id": 46,
+    "user_id": 8,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/e50a249558f4d71e29152ad1bdde1785.jpg",
+    "created_at": "2026-06-09 14:03:27"
+  },
+  {
+    "id": 45,
+    "user_id": 8,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/33a456fd51bb446fd40c8f7392e58280.jpg",
+    "created_at": "2026-06-09 14:03:06"
+  },
+  {
+    "id": 44,
+    "user_id": 8,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/ce3540f3c8f754375a48d3d93a7eb970.jpg",
+    "created_at": "2026-06-09 14:02:40"
+  },
+  {
+    "id": 43,
+    "user_id": 8,
+    "result": "Slough",
+    "confidence": 57.949,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/c3818e8a349bff42f29e9c190eedfccc.jpg",
+    "created_at": "2026-06-09 14:02:17"
+  },
+  {
+    "id": 42,
+    "user_id": 8,
+    "result": "Granulation tissue",
+    "confidence": 99.7643,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/df0cf54122d0a2abeb56aecca823faf1.jpg",
+    "created_at": "2026-06-09 14:01:45"
+  },
+  {
+    "id": 41,
+    "user_id": 8,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/e2e60d8e4ae2ebd19e96da5bdcaac3a8.jpg",
+    "created_at": "2026-06-09 14:01:17"
+  },
+  {
+    "id": 40,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.6965,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/f94435913c526c7f8381270952c8e9a1.jpg",
+    "created_at": "2026-06-02 14:08:52"
+  },
+  {
+    "id": 39,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 98.9386,
+    "image_path": "http://192.168.1.11/smart_ulcer_api/uploads/0053b0aabd043dab1cb9e12ad2b664e6.jpg",
+    "created_at": "2026-06-01 23:17:12"
+  },
+  {
+    "id": 38,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://192.168.1.11/smart_ulcer_api/uploads/484dfd3c610f8d1945ecf38a88ba4189.jpg",
+    "created_at": "2026-06-01 23:16:43"
+  },
+  {
+    "id": 37,
+    "user_id": 7,
+    "result": "Granulation tissue",
+    "confidence": 99.6923,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/365e4947689c1a696daa0b4694ad4d9c.jpg",
+    "created_at": "2026-05-30 13:06:16"
+  },
+  {
+    "id": 36,
+    "user_id": 7,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/51f66f597dbf5d3880da1a137bf0664c.jpg",
+    "created_at": "2026-05-30 13:05:09"
+  },
+  {
+    "id": 35,
+    "user_id": 7,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/6b184861a9b43fe6c42a9426d025cd71.jpg",
+    "created_at": "2026-05-30 12:59:42"
+  },
+  {
+    "id": 34,
+    "user_id": 7,
+    "result": "Necrotic tissue",
+    "confidence": 47.0722,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/8be20028b8f7fd775b0e3dcaf1f721ab.jpg",
+    "created_at": "2026-05-30 12:59:25"
+  },
+  {
+    "id": 33,
+    "user_id": 6,
+    "result": "Slough",
+    "confidence": 57.949,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/c953ac8a23afa713210c18f04e56f44b.jpg",
+    "created_at": "2026-05-30 12:24:00"
+  },
+  {
+    "id": 32,
+    "user_id": 6,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/dd1c481f57c1f9430d738a927fb37ca9.jpg",
+    "created_at": "2026-05-30 12:23:51"
+  },
+  {
+    "id": 31,
+    "user_id": 6,
+    "result": "Granulation tissue",
+    "confidence": 96.9441,
+    "image_path": "http://172.20.10.4/smart_ulcer_api/uploads/75f5ced5ffb8916cbec1b2fc2d16bbf4.jpg",
+    "created_at": "2026-05-27 09:15:38"
+  },
+  {
+    "id": 30,
+    "user_id": 6,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://192.168.1.11/smart_ulcer_api/uploads/8ccac4827f3bf752dbc92b0aba071952.jpg",
+    "created_at": "2026-05-26 23:52:51"
+  },
+  {
+    "id": 29,
+    "user_id": 6,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://192.168.1.11/smart_ulcer_api/uploads/8ccac4827f3bf752dbc92b0aba071952.jpg",
+    "created_at": "2026-05-26 23:52:51"
+  },
+  {
+    "id": 28,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 99.8882,
+    "image_path": "http://192.168.1.11/smart_ulcer_api/uploads/f81463ebec249c6befb665fcdbf4b00f.jpg",
+    "created_at": "2026-05-26 23:15:39"
+  },
+  {
+    "id": 27,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://192.168.1.11/smart_ulcer_api/uploads/1349ccefa50a334e97528f3d139b7c74.jpg",
+    "created_at": "2026-05-26 23:14:53"
+  },
+  {
+    "id": 26,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/0fbc8e0c80260463f2ebfc7a23ed9952.jpg",
+    "created_at": "2026-05-26 14:52:49"
+  },
+  {
+    "id": 25,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/607fd08c64a5fb36a949475c1ff39e67.jpg",
+    "created_at": "2026-05-26 14:52:34"
+  },
+  {
+    "id": 24,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/3d0439fbf202eeca921ba3fb62e39b30.jpg",
+    "created_at": "2026-05-26 14:49:51"
+  },
+  {
+    "id": 23,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/8e15cd7f9243d3829a13b6d1ee9718e9.jpg",
+    "created_at": "2026-05-26 14:48:10"
+  },
+  {
+    "id": 22,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 71.8341,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/5297f6fe560eb0d9aeb220d388b8eded.jpg",
+    "created_at": "2026-05-26 14:47:52"
+  },
+  {
+    "id": 21,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/a2162625cd3caa326c53bffaac66120f.jpg",
+    "created_at": "2026-05-26 14:47:38"
+  },
+  {
+    "id": 20,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/38b8ac3e1ea7485c8912f43dc27dd86c.jpg",
+    "created_at": "2026-05-26 14:47:28"
+  },
+  {
+    "id": 19,
+    "user_id": 2,
+    "result": "Unable to Identify",
+    "confidence": 0,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/f1f4929363085a95f03412eea5a3c99d.jpg",
+    "created_at": "2026-05-26 14:47:14"
+  },
+  {
+    "id": 18,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 63.2945,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/cee7d1fa209ea3b95d760b5c824a534d.jpg",
+    "created_at": "2026-05-26 14:31:00"
+  },
+  {
+    "id": 17,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 93.1496,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/3a1fc0b289b81e2bf19ad95fd8fd3e36.jpg",
+    "created_at": "2026-05-26 14:22:18"
+  },
+  {
+    "id": 16,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 91.9386,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/f25b74738b5a8d7a85da75bbb6f3bbf9.jpg",
+    "created_at": "2026-05-26 14:21:58"
+  },
+  {
+    "id": 15,
+    "user_id": 2,
+    "result": "Granulation tissue",
+    "confidence": 51.7985,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/49e0c0ac2b0eac88eb5e0d2cd20e11db.jpg",
+    "created_at": "2026-05-26 14:21:41"
+  },
+  {
+    "id": 14,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 85.6218,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/ee6e041c8a6452f87be96608ff2b4b93.jpg",
+    "created_at": "2026-05-26 14:11:14"
+  },
+  {
+    "id": 13,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 70.8253,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/964688c162ac5be52b474579694b29ea.jpg",
+    "created_at": "2026-05-26 14:07:47"
+  },
+  {
+    "id": 12,
+    "user_id": 2,
+    "result": "Slough",
+    "confidence": 99.2624,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/dfdc20dc0f336ad1b3b8c235e5c04d0a.jpg",
+    "created_at": "2026-05-26 13:48:54"
+  },
+  {
+    "id": 11,
+    "user_id": 4,
+    "result": "Epithelialisation (pink, new skin)",
+    "confidence": 87.3,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/2d8a4da0f0c7357ffbebecc756d2e862.jpg",
+    "created_at": "2026-05-26 13:40:44"
+  },
+  {
+    "id": 10,
+    "user_id": 4,
+    "result": "Granulation tissue (red, healing)",
+    "confidence": 92.66,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/2d8a4da0f0c7357ffbebecc756d2e862.jpg",
+    "created_at": "2026-05-26 13:40:44"
+  },
+  {
+    "id": 9,
+    "user_id": 4,
+    "result": "Granulation tissue (red, healing)",
+    "confidence": 72.18,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/2d8a4da0f0c7357ffbebecc756d2e862.jpg",
+    "created_at": "2026-05-26 13:40:44"
+  },
+  {
+    "id": 8,
+    "user_id": 4,
+    "result": "Necrotic tissue (black, dead)",
+    "confidence": 71.92,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/2d8a4da0f0c7357ffbebecc756d2e862.jpg",
+    "created_at": "2026-05-26 13:40:44"
+  },
+  {
+    "id": 7,
+    "user_id": 4,
+    "result": "Epithelialisation (pink, new skin)",
+    "confidence": 72.18,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/2d8a4da0f0c7357ffbebecc756d2e862.jpg",
+    "created_at": "2026-05-26 13:40:44"
+  },
+  {
+    "id": 6,
+    "user_id": 4,
+    "result": "Epithelialisation (pink, new skin)",
+    "confidence": 72.65,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/2d8a4da0f0c7357ffbebecc756d2e862.jpg",
+    "created_at": "2026-05-26 13:40:44"
+  },
+  {
+    "id": 5,
+    "user_id": 4,
+    "result": "Epithelialisation (pink, new skin)",
+    "confidence": 75.21,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/2d8a4da0f0c7357ffbebecc756d2e862.jpg",
+    "created_at": "2026-05-26 13:40:44"
+  },
+  {
+    "id": 4,
+    "user_id": 4,
+    "result": "Granulation tissue (red, healing)",
+    "confidence": 78.03,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/2d8a4da0f0c7357ffbebecc756d2e862.jpg",
+    "created_at": "2026-05-26 13:40:44"
+  },
+  {
+    "id": 3,
+    "user_id": 2,
+    "result": "Granulation tissue (red, healing)",
+    "confidence": 95.5,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/d0e058218ef2a5021b63e3f533503c74.jpg",
+    "created_at": "2026-05-26 12:56:45"
+  },
+  {
+    "id": 2,
+    "user_id": 2,
+    "result": "Granulation tissue (red, healing)",
+    "confidence": 88.6,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/50c933d3b262003437dd512460e7f4a5.jpg",
+    "created_at": "2026-05-26 12:49:13"
+  },
+  {
+    "id": 1,
+    "user_id": 1,
+    "result": "Epithelialisation (pink, new skin)",
+    "confidence": 74,
+    "image_path": "http://10.226.159.76/smart_ulcer_api/uploads/d854623cc4005ea2d7f4f51bd7e77d28.jpg",
+    "created_at": "2026-05-26 12:37:13"
+  }
+]

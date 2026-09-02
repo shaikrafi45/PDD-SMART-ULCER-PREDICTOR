@@ -9,7 +9,7 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -119,11 +119,37 @@ fun UserProfileDialog(
 
                 Spacer(modifier = Modifier.height(28.dp))
 
+                var showConfirmLogout by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+
+                if (showConfirmLogout) {
+                    AlertDialog(
+                        onDismissRequest = { showConfirmLogout = false },
+                        title = { Text(text = "Confirm Logout", fontWeight = FontWeight.Bold) },
+                        text = { Text(text = "Are you sure you want to log out? You will need to log in again to access your account.") },
+                        confirmButton = {
+                            Button(
+                                onClick = {
+                                    showConfirmLogout = false
+                                    onClose()
+                                    onLogout()
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE53935))
+                            ) {
+                                Text(text = "Logout", color = Color.White, fontWeight = FontWeight.Bold)
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showConfirmLogout = false }) {
+                                Text(text = "Cancel", color = Color.Gray)
+                            }
+                        }
+                    )
+                }
+
                 // Logout Button
                 Button(
                     onClick = {
-                        onClose()
-                        onLogout()
+                        showConfirmLogout = true
                     },
                     modifier = Modifier
                         .fillMaxWidth()

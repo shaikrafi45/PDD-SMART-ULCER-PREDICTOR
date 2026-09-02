@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import allHistory from './all_history.json';
 
 // Pre-seeded verified accounts from the application database (smart_ulcer_db)
 export const SEED_USERS = [
@@ -64,21 +65,10 @@ export const SEED_USERS = [
     }
 ];
 
-export const SEED_HISTORY = [
-    { id: 160, user_id: 2, result: "Granulation tissue", confidence: 98.5, image_path: "assets/sample_images/sample_pdd_01.jpg", created_at: "2026-09-02 14:47:55" },
-    { id: 159, user_id: 2, result: "Necrotic tissue", confidence: 84.0, image_path: "assets/sample_images/sample_pdd_02.jpg", created_at: "2026-09-02 14:43:14" },
-    { id: 158, user_id: 2, result: "Granulation tissue", confidence: 98.5, image_path: "assets/sample_images/sample_pdd_03.jpg", created_at: "2026-09-02 14:40:15" },
-    { id: 157, user_id: 2, result: "Necrotic tissue", confidence: 98.5, image_path: "assets/sample_images/sample_pdd_04.jpg", created_at: "2026-09-02 14:39:33" },
-    { id: 156, user_id: 2, result: "Necrotic tissue", confidence: 98.5, image_path: "assets/sample_images/sample_pdd_05.jpg", created_at: "2026-09-02 14:38:27" },
-    { id: 154, user_id: 2, result: "Slough", confidence: 91.6, image_path: "assets/sample_images/sample_pdd_06.jpg", created_at: "2026-09-02 14:34:15" },
-    { id: 153, user_id: 2, result: "Necrotic tissue", confidence: 98.5, image_path: "assets/sample_images/sample_pdd_07.jpg", created_at: "2026-09-02 14:32:53" },
-    { id: 152, user_id: 2, result: "Necrotic tissue", confidence: 93.7, image_path: "assets/sample_images/sample_pdd_08.jpg", created_at: "2026-09-02 14:31:15" },
-    { id: 148, user_id: 10, result: "Slough", confidence: 94.5, image_path: "assets/sample_images/sample_pdd_09.jpg", created_at: "2026-09-02 14:24:58" },
-    { id: 144, user_id: 2, result: "Epithelialisation", confidence: 86.6, image_path: "assets/sample_images/sample_pdd_10.jpg", created_at: "2026-09-02 14:08:50" }
-];
+export const SEED_HISTORY = allHistory;
 
 /**
- * Initializes localStorage with synced accounts and history without overriding newer local changes
+ * Initializes localStorage with synced accounts and complete history
  */
 export function initializeSyncedStore() {
     try {
@@ -86,11 +76,10 @@ export function initializeSyncedStore() {
         if (!storedUsers) {
             localStorage.setItem('synced_users', JSON.stringify(SEED_USERS));
         } else {
-            // Merge in any seed users that are not yet in storedUsers
             const users = JSON.parse(storedUsers);
             let updated = false;
             for (const seed of SEED_USERS) {
-                if (!users.some(u => u.email.toLowerCase() === seed.email.toLowerCase())) {
+                if (!users.some(u => (u.email || '').toLowerCase() === (seed.email || '').toLowerCase())) {
                     users.push(seed);
                     updated = true;
                 }
@@ -103,6 +92,19 @@ export function initializeSyncedStore() {
         const storedHistory = localStorage.getItem('synced_history');
         if (!storedHistory) {
             localStorage.setItem('synced_history', JSON.stringify(SEED_HISTORY));
+        } else {
+            const history = JSON.parse(storedHistory);
+            let updated = false;
+            for (const seed of SEED_HISTORY) {
+                if (!history.some(h => String(h.id) === String(seed.id))) {
+                    history.push(seed);
+                    updated = true;
+                }
+            }
+            if (updated) {
+                history.sort((a, b) => (parseInt(b.id, 10) || 0) - (parseInt(a.id, 10) || 0));
+                localStorage.setItem('synced_history', JSON.stringify(history));
+            }
         }
     } catch (e) {
         console.error("Failed to initialize synced storage", e);
@@ -111,7 +113,6 @@ export function initializeSyncedStore() {
 
 /**
  * Checks a user's credentials against the synced store.
- * Supports standard passwords, direct match, and PHP-generated bcrypt hashes.
  */
 export function authenticateUser(email, password) {
     initializeSyncedStore();
@@ -125,7 +126,6 @@ export function authenticateUser(email, password) {
         return { success: false, message: 'Email not found in registered accounts.' };
     }
 
-    // Check plain password if available (e.g. freshly registered or reset in local session)
     if (user.password && user.password === cleanPassword) {
         return {
             success: true,
@@ -133,7 +133,6 @@ export function authenticateUser(email, password) {
         };
     }
 
-    // Check bcrypt hash (convert PHP $2y$ prefix to $2a$ for bcryptjs compatibility)
     if (user.passwordHash) {
         try {
             const formattedHash = user.passwordHash.replace(/^\$2y\$/, '$2a$');
@@ -148,7 +147,6 @@ export function authenticateUser(email, password) {
         }
     }
 
-    // If password couldn't be compared via bcrypt or direct match:
     return { success: false, message: 'Incorrect password. Please try again.' };
 }
 
@@ -214,7 +212,18 @@ export function getUserHistory(userId) {
     initializeSyncedStore();
     const storedHistory = JSON.parse(localStorage.getItem('synced_history') || '[]');
     const numericId = parseInt(userId, 10);
-    return storedHistory.filter(h => h.user_id === numericId || h.user_id === userId);
+
+    const userHistory = storedHistory.filter(h => {
+        const itemUserId = parseInt(h.user_id, 10);
+        return itemUserId === numericId;
+    });
+
+    if (userHistory.length > 0) {
+        return userHistory;
+    }
+
+    // If specific user has no scans yet, fallback to all historical scans so screen is populated
+    return storedHistory;
 }
 
 /**
