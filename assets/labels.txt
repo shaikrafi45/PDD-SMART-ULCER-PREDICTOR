@@ -1,0 +1,5 @@
+Epithelialisation
+Granulation
+Necrotic
+Normal
+Slough
