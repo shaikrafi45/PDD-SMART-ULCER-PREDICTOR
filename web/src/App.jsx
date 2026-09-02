@@ -50,27 +50,39 @@ export function App() {
 
     const savedResult = (() => {
         try {
-            const raw = sessionStorage.getItem('smart_ulcer_last_result');
+            const raw = sessionStorage.getItem('smart_ulcer_last_result') || localStorage.getItem('smart_ulcer_last_result');
             return raw ? JSON.parse(raw) : null;
         } catch (e) {
             return null;
         }
     })();
 
-    const savedScreen = (() => {
+    const getInitialScreen = () => {
+        const hash = window.location.hash.replace('#', '').trim();
+        const validScreens = ['splash', 'disclaimer', 'register', 'login', 'forgot-password', 'reset-password', 'dashboard', 'upload', 'result', 'precautions', 'history'];
+        
+        if (hash && validScreens.includes(hash)) {
+            if (savedSession && (hash === 'login' || hash === 'register' || hash === 'splash')) {
+                return 'dashboard';
+            }
+            return hash;
+        }
+
         const scr = localStorage.getItem('smart_ulcer_current_screen');
         if (savedSession) {
-            // If user is already logged in, restore their exact screen or default to dashboard
-            const validScreens = ['dashboard', 'upload', 'result', 'precautions', 'history'];
-            if (scr && validScreens.includes(scr)) {
+            if (scr && ['dashboard', 'upload', 'result', 'precautions', 'history'].includes(scr)) {
                 return scr;
             }
             return 'dashboard';
         }
+        
+        if (scr && ['disclaimer', 'register', 'login', 'forgot-password', 'reset-password'].includes(scr)) {
+            return scr;
+        }
         return 'splash';
-    })();
+    };
 
-    const [currentScreen, setCurrentScreen] = useState(savedScreen);
+    const [currentScreen, setCurrentScreen] = useState(getInitialScreen());
     const [navigationStack, setNavigationStack] = useState([]);
     const [currentUser, setCurrentUser] = useState(savedSession);
     const [lastResetEmail, setLastResetEmail] = useState('');
@@ -80,18 +92,45 @@ export function App() {
     
     const classifierRef = useRef(null);
 
-    // Mount logic: initialize classifier & handle unauthenticated splash
+    // Mount logic: initialize classifier, sync URL hash & maintain state across refreshes
     useEffect(() => {
         classifierRef.current = new UlcerClassifier();
         initializeSyncedStore();
 
+        const handleHashOrPopState = () => {
+            const hash = window.location.hash.replace('#', '').trim();
+            const validScreens = ['splash', 'disclaimer', 'register', 'login', 'forgot-password', 'reset-password', 'dashboard', 'upload', 'result', 'precautions', 'history'];
+            
+            if (hash && validScreens.includes(hash)) {
+                setCurrentScreen(hash);
+                localStorage.setItem('smart_ulcer_current_screen', hash);
+            }
+        };
+
+        window.addEventListener('popstate', handleHashOrPopState);
+        window.addEventListener('hashchange', handleHashOrPopState);
+
+        const initialScreen = getInitialScreen();
+        if (initialScreen && initialScreen !== 'splash') {
+            window.history.replaceState({ screen: initialScreen }, '', '#' + initialScreen);
+        }
+
         // If not logged in and starting from splash screen, transition to login
-        if (!savedSession && currentScreen === 'splash') {
+        if (!savedSession && initialScreen === 'splash') {
             const timer = setTimeout(() => {
                 navigateTo('login', [], 'splash');
             }, CONFIG.splashDelay);
-            return () => clearTimeout(timer);
+            return () => {
+                clearTimeout(timer);
+                window.removeEventListener('popstate', handleHashOrPopState);
+                window.removeEventListener('hashchange', handleHashOrPopState);
+            };
         }
+
+        return () => {
+            window.removeEventListener('popstate', handleHashOrPopState);
+            window.removeEventListener('hashchange', handleHashOrPopState);
+        };
     }, []);
 
     /* ==========================================
@@ -115,26 +154,44 @@ export function App() {
         
         if (customStack !== null) {
             setNavigationStack(customStack);
-        } else if (current !== 'splash') {
+        } else if (current !== 'splash' && current !== screenId) {
             setNavigationStack(prev => [...prev, current]);
         }
         
         setCurrentScreen(screenId);
         localStorage.setItem('smart_ulcer_current_screen', screenId);
+        
+        try {
+            if (window.location.hash !== '#' + screenId) {
+                window.history.pushState({ screen: screenId }, '', '#' + screenId);
+            }
+        } catch (e) {
+            window.location.hash = screenId;
+        }
     };
 
     const navigateBack = (fallbackScreen = null) => {
-        if (navigationStack.length === 0) {
-            const target = fallbackScreen || (currentUser ? 'dashboard' : 'login');
-            setCurrentScreen(target);
-            localStorage.setItem('smart_ulcer_current_screen', target);
+        if (navigationStack.length > 0) {
+            const prevScreenId = navigationStack[navigationStack.length - 1];
+            setNavigationStack(prev => prev.slice(0, -1));
+            setCurrentScreen(prevScreenId);
+            localStorage.setItem('smart_ulcer_current_screen', prevScreenId);
+            try {
+                window.history.replaceState({ screen: prevScreenId }, '', '#' + prevScreenId);
+            } catch (e) {
+                window.location.hash = prevScreenId;
+            }
             return;
         }
         
-        const prevScreenId = navigationStack[navigationStack.length - 1];
-        setNavigationStack(prev => prev.slice(0, -1));
-        setCurrentScreen(prevScreenId);
-        localStorage.setItem('smart_ulcer_current_screen', prevScreenId);
+        const target = fallbackScreen || (currentUser ? 'dashboard' : 'login');
+        setCurrentScreen(target);
+        localStorage.setItem('smart_ulcer_current_screen', target);
+        try {
+            window.history.replaceState({ screen: target }, '', '#' + target);
+        } catch (e) {
+            window.location.hash = target;
+        }
     };
 
     /* ==========================================
@@ -159,6 +216,7 @@ export function App() {
         localStorage.removeItem('smart_ulcer_session');
         localStorage.removeItem('smart_ulcer_current_screen');
         sessionStorage.removeItem('smart_ulcer_last_result');
+        localStorage.removeItem('smart_ulcer_last_result');
         navigateTo('login', []);
         showToast("Logged out successfully");
     };
