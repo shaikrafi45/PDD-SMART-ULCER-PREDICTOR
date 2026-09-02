@@ -12,6 +12,7 @@ import Result from './components/Result';
 import Precautions from './components/Precautions';
 import History from './components/History';
 import ProfileModal from './components/ProfileModal';
+import LogoutModal from './components/LogoutModal';
 import UlcerClassifier from './utils/classifier';
 import { 
     initializeSyncedStore, 
@@ -106,6 +107,7 @@ export function App() {
     const [lastResetEmail, setLastResetEmail] = useState('');
     const [analysisResult, setAnalysisResult] = useState(savedResult);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
     const [toasts, setToasts] = useState([]);
     
     const classifierRef = useRef(null);
@@ -230,7 +232,14 @@ export function App() {
         navigateTo('dashboard', []);
     };
 
+    const requestLogout = () => {
+        setIsProfileOpen(false);
+        setIsLogoutModalOpen(true);
+    };
+
     const handleLogout = () => {
+        setIsLogoutModalOpen(false);
+        setIsProfileOpen(false);
         setCurrentUser(null);
         setAnalysisResult(null);
         try {
@@ -477,7 +486,7 @@ export function App() {
                 return (
                     <Dashboard 
                         onGoToHistory={() => navigateTo('history')}
-                        onLogout={handleLogout}
+                        onLogout={requestLogout}
                         onUploadClick={() => navigateTo('upload')}
                     />
                 );
@@ -539,7 +548,14 @@ export function App() {
                 isOpen={isProfileOpen} 
                 onClose={() => setIsProfileOpen(false)} 
                 user={currentUser} 
-                onLogout={handleLogout}
+                onLogout={requestLogout}
+            />
+
+            {/* Logout Confirmation Dialog Modal */}
+            <LogoutModal 
+                isOpen={isLogoutModalOpen}
+                onCancel={() => setIsLogoutModalOpen(false)}
+                onConfirm={handleLogout}
             />
 
             {/* Dynamic Toast Container */}
