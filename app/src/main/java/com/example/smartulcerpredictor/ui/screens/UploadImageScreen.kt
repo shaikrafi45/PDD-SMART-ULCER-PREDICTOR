@@ -8,6 +8,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -66,38 +67,60 @@ fun UploadImageScreen(
         isLoading = true
         coroutineScope.launch {
             try {
-                // Run Local TFLite Inference
-                val results = classifier.classify(bitmap)
-                if (results.isNotEmpty()) {
-                    val topResult = results[0]
+                // Run Comprehensive Tissue Analysis
+                val analysis = classifier.analyzeWound(bitmap)
+                
+                // Validate if it is a genuine ulcer image
+                if (!analysis.isValidUlcer) {
+                    isLoading = false
                     viewModel?.setAnalysisResult(
                         AnalysisResult(
-                            label = topResult.label,
-                            confidence = topResult.score * 100,
-                            image = bitmap
+                            label = "Unable to Identify",
+                            confidence = 0f,
+                            image = bitmap,
+                            tissueBreakdown = emptyMap()
                         )
                     )
+                    val errorMsg = analysis.errorMessage ?: "Unable to identify: No active ulcer wound detected."
+                    Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show()
+                    onUploadImage()
+                    return@launch
                 }
 
-                // Still attempt to upload to backend for database history
-                val part = getMultipartFromBitmap(bitmap)
-                if (part != null) {
-                    val label = if (results.isNotEmpty()) results[0].label else "Unable to Identify"
-                    val confidenceVal = if (results.isNotEmpty()) results[0].score * 100 else 0f
-                    val userIdBody = UserSession.userId.toString()
-                        .toRequestBody("text/plain".toMediaTypeOrNull())
-                    val resultBody = label.toRequestBody("text/plain".toMediaTypeOrNull())
-                    val confidenceBody = confidenceVal.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-                    RetrofitClient.instance.uploadImage(userIdBody, resultBody, confidenceBody, part)
-                    // We don't necessarily wait for the network to show the local TFLite result
+                // Set local analysis result immediately
+                viewModel?.setAnalysisResult(
+                    AnalysisResult(
+                        label = analysis.primaryLabel,
+                        confidence = analysis.confidence,
+                        image = bitmap,
+                        tissueBreakdown = analysis.tissueBreakdown
+                    )
+                )
+
+                // Background sync to backend database for history logging (fire & forget, non-blocking)
+                kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+                    try {
+                        val part = getMultipartFromBitmap(bitmap)
+                        if (part != null) {
+                            val userIdBody = UserSession.userId.toString()
+                                .toRequestBody("text/plain".toMediaTypeOrNull())
+                            val resultBody = analysis.primaryLabel
+                                .toRequestBody("text/plain".toMediaTypeOrNull())
+                            val confidenceBody = analysis.confidence.toString()
+                                .toRequestBody("text/plain".toMediaTypeOrNull())
+                            RetrofitClient.instance.uploadImage(userIdBody, resultBody, confidenceBody, part)
+                        }
+                    } catch (netErr: Exception) {
+                        // Silent log for offline network resilience
+                        netErr.printStackTrace()
+                    }
                 }
                 
                 isLoading = false
-                onUploadImage() // Navigates to analysis_result
+                onUploadImage() // Navigates directly to analysis_result
             } catch (e: Exception) {
                 isLoading = false
-                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
-                // Still show result screen if local inference worked
+                Toast.makeText(context, "Analysis Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 onUploadImage()
             }
         }

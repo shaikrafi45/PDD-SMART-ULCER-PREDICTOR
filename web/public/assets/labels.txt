@@ -1,5 +1,5 @@
-Granulation tissue
-Slough
-Necrotic tissue
 Epithelialisation
-Unable to Identify
+Granulation
+Necrotic
+Normal
+Slough

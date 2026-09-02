@@ -2,7 +2,8 @@ import React from 'react';
 
 export function Result({ onBack, onProfileClick, onPrecautionsClick, onViewHistory, result }) {
     const resultText = result?.label || "Unable to Identify";
-    const confidenceText = `Confidence: ${(result?.confidence || 0).toFixed(2)}%`;
+    const isUnable = resultText.toLowerCase() === "unable to identify";
+    const confidenceText = isUnable ? "Confidence: 0.00%" : `Confidence: ${(result?.confidence || 0).toFixed(2)}%`;
     const imageSrc = result?.imageBase64 || '';
 
     return (
@@ -38,15 +39,17 @@ export function Result({ onBack, onProfileClick, onPrecautionsClick, onViewHisto
                     )}
                 </div>
                 
-                <div className="result-data-card mt-medium">
+                <div className="result-data-card mt-medium" style={isUnable ? { backgroundColor: '#616161' } : {}}>
                     <h3 id="result-label" className="result-title">{resultText}</h3>
                     <p id="result-confidence" className="result-percent">{confidenceText}</p>
                 </div>
-                
-                <div className="warning-row mt-large">
-                    <span className="warning-icon">⚠️</span>
+
+                <div className="warning-row mt-large" style={isUnable ? { borderLeftColor: '#757575', backgroundColor: 'rgba(117, 117, 117, 0.1)' } : {}}>
+                    <span className="warning-icon">{isUnable ? "ℹ️" : "⚠️"}</span>
                     <p className="warning-text">
-                        This assessment is AI-generated. Check 'Precautions & Tips' below for wound care guidelines and consult a medical professional.
+                        {isUnable 
+                            ? "No active ulcer wound could be identified in this image. Please upload a clear, focused close-up photo of a foot or leg ulcer wound."
+                            : "This assessment is AI-generated. Check 'Precautions & Tips' below for wound care guidelines and consult a medical professional."}
                     </p>
                 </div>
                 

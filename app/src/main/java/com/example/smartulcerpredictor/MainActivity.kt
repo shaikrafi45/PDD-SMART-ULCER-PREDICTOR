@@ -127,7 +127,12 @@ class MainActivity : ComponentActivity() {
                         AnalysisResultScreen(
                             result = result,
                             onBack = { navController.popBackStack() },
-                            onProfileClick = { /* Handle profile */ },
+                            onLogout = {
+                                UserSession.clear()
+                                navController.navigate("initial") {
+                                    popUpTo(0)
+                                }
+                            },
                             onPrecautionsClick = { navController.navigate("precautions") },
                             onViewHistory = { navController.navigate("history") }
                         )

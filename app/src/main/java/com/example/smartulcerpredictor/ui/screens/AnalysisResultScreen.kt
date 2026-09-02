@@ -38,13 +38,20 @@ import com.example.smartulcerpredictor.ui.AnalysisResult
 fun AnalysisResultScreen(
     result: AnalysisResult? = null,
     onBack: () -> Unit = {},
-    onProfileClick: () -> Unit = {},
+    onLogout: () -> Unit = {},
     onPrecautionsClick: () -> Unit = {},
     onViewHistory: () -> Unit = {}
 ) {
+    var showProfileDialog by remember { mutableStateOf(false) }
     val resultText = result?.label ?: "Unable to Identify"
     val confidenceText = "Confidence: ${"%.2f".format(result?.confidence ?: 0f)}%"
     val localBitmap = result?.image
+
+    UserProfileDialog(
+        isOpen = showProfileDialog,
+        onClose = { showProfileDialog = false },
+        onLogout = onLogout
+    )
 
     Scaffold(
         containerColor = Color(0xFFFBFBFB),
@@ -67,7 +74,7 @@ fun AnalysisResultScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = onProfileClick) {
+                    IconButton(onClick = { showProfileDialog = true }) {
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
                             contentDescription = "Profile",
@@ -141,43 +148,58 @@ fun AnalysisResultScreen(
             // Result Card
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF333333))
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = when (resultText.lowercase()) {
+                        "granulation" -> Color(0xFFD32F2F)
+                        "slough" -> Color(0xFFF57F17)
+                        "necrotic" -> Color(0xFF212121)
+                        "epithelialisation", "epithelialization" -> Color(0xFFE91E63)
+                        "normal" -> Color(0xFF2E7D32)
+                        "unable to identify" -> Color(0xFF616161)
+                        else -> Color(0xFF616161)
+                    }
+                )
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(20.dp),
-                    verticalArrangement = Arrangement.Center,
+                        .padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = resultText,
                         color = Color.White,
-                        fontSize = 20.sp,
+                        fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = confidenceText,
-                        color = Color.White.copy(alpha = 0.8f),
-                        fontSize = 16.sp
+                        color = Color.White.copy(alpha = 0.9f),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Warning Message
+            // Warning / Informational Message
+            val isUnable = resultText.equals("Unable to Identify", ignoreCase = true)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "⚠️", fontSize = 20.sp)
+                Text(text = if (isUnable) "ℹ️" else "⚠️", fontSize = 20.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "This assessment is AI-generated. Check 'Precautions & Tips' below for wound care guidelines and consult a medical professional.",
+                    text = if (isUnable) {
+                        "No active ulcer wound could be identified in this image. Please upload a clear, focused close-up photo of a foot or leg ulcer wound."
+                    } else {
+                        "This assessment is AI-generated. Check 'Precautions & Tips' below for wound care guidelines and consult a medical professional."
+                    },
                     fontSize = 13.sp,
                     color = Color.Black,
                     lineHeight = 18.sp
@@ -225,17 +247,40 @@ fun NetworkImage(url: String) {
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     var hasError by remember { mutableStateOf(false) }
 
-    LaunchedEffect(url) {
+    val resolvedUrl = remember(url) {
+        com.example.smartulcerpredictor.data.api.RetrofitClient.resolveImageUrl(url)
+    }
+
+    LaunchedEffect(resolvedUrl) {
+        if (resolvedUrl.isEmpty()) {
+            hasError = true
+            return@LaunchedEffect
+        }
         withContext(Dispatchers.IO) {
             try {
-                val connection = URL(url).openConnection() as HttpURLConnection
-                connection.doInput = true
+                val connection = (URL(resolvedUrl).openConnection() as HttpURLConnection).apply {
+                    doInput = true
+                    connectTimeout = 10000
+                    readTimeout = 10000
+                    instanceFollowRedirects = true
+                }
                 connection.connect()
-                val inputStream = connection.inputStream
-                val decoded = BitmapFactory.decodeStream(inputStream)
-                inputStream.close()
-                withContext(Dispatchers.Main) {
-                    bitmap = decoded
+                if (connection.responseCode in 200..299) {
+                    val inputStream = connection.inputStream
+                    val decoded = BitmapFactory.decodeStream(inputStream)
+                    inputStream.close()
+                    withContext(Dispatchers.Main) {
+                        if (decoded != null) {
+                            bitmap = decoded
+                            hasError = false
+                        } else {
+                            hasError = true
+                        }
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        hasError = true
+                    }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -255,11 +300,11 @@ fun NetworkImage(url: String) {
         )
     } else if (hasError) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = "Failed to load image preview", color = Color.White)
+            Text(text = "Image preview not available", color = Color.Gray, fontSize = 13.sp)
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator(color = Color.White)
+            CircularProgressIndicator(color = Color(0xFF1976D2), modifier = Modifier.size(28.dp))
         }
     }
 }

@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 data class AnalysisResult(
     val label: String,
     val confidence: Float,
-    val image: Bitmap? = null
+    val image: Bitmap? = null,
+    val tissueBreakdown: Map<String, Float> = emptyMap()
 )
 
 class MainViewModel : ViewModel() {

@@ -17,56 +17,77 @@ import UlcerClassifier from './utils/classifier';
 // CSS Styling
 import './css/style.css';
 
-// Config
+// Dynamic backend API URL: connects directly to XAMPP / Apache backend
+const getApiBaseUrl = () => {
+    const host = window.location.hostname || 'localhost';
+    return `http://${host}/smart_ulcer_api/`;
+};
+
 const CONFIG = {
-    apiBaseUrl: window.location.origin.includes('localhost') 
-        ? 'http://localhost/smart_ulcer_api/' 
-        : 'https://8a32813407e2a0.lhr.life/smart_ulcer_api/',
+    apiBaseUrl: getApiBaseUrl(),
     splashDelay: 4000,
     mockMode: false
 };
 
 export function App() {
-    const [currentScreen, setCurrentScreen] = useState('splash');
+    // Read persisted session and screen from localStorage
+    const savedSession = (() => {
+        try {
+            const raw = localStorage.getItem('smart_ulcer_session');
+            return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+            return null;
+        }
+    })();
+
+    const savedResult = (() => {
+        try {
+            const raw = sessionStorage.getItem('smart_ulcer_last_result');
+            return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+            return null;
+        }
+    })();
+
+    const savedScreen = (() => {
+        const scr = localStorage.getItem('smart_ulcer_current_screen');
+        if (savedSession) {
+            // If user is already logged in, restore their exact screen or default to dashboard
+            const validScreens = ['dashboard', 'upload', 'result', 'precautions', 'history'];
+            if (scr && validScreens.includes(scr)) {
+                return scr;
+            }
+            return 'dashboard';
+        }
+        return 'splash';
+    })();
+
+    const [currentScreen, setCurrentScreen] = useState(savedScreen);
     const [navigationStack, setNavigationStack] = useState([]);
-    const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState(savedSession);
     const [lastResetEmail, setLastResetEmail] = useState('');
-    const [analysisResult, setAnalysisResult] = useState(null);
+    const [analysisResult, setAnalysisResult] = useState(savedResult);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [toasts, setToasts] = useState([]);
     
     const classifierRef = useRef(null);
-    const mockModeRef = useRef(CONFIG.mockMode);
 
-    // Mount logic: initialize classifier & session
+    // Mount logic: initialize classifier & handle unauthenticated splash
     useEffect(() => {
         classifierRef.current = new UlcerClassifier();
-        
-        // Session
-        const session = localStorage.getItem('smart_ulcer_session');
-        let initialUser = null;
-        if (session) {
-            try {
-                initialUser = JSON.parse(session);
-                setCurrentUser(initialUser);
-                console.log("React Session loaded:", initialUser);
-            } catch (e) {
-                localStorage.removeItem('smart_ulcer_session');
-            }
-        }
 
-        // Seed mock DB
-        if (!localStorage.getItem('mock_users')) {
-            localStorage.setItem('mock_users', JSON.stringify([]));
-        }
-        if (!localStorage.getItem('mock_history')) {
-            localStorage.setItem('mock_history', JSON.stringify([]));
-        }
+        // Clear any old mock cache to force live MySQL database usage
+        localStorage.removeItem('mock_users');
+        localStorage.removeItem('mock_history');
+        localStorage.removeItem('mock_last_reset_email');
 
-        // Splash screen auto transition -> directly to Login screen
-        setTimeout(() => {
-            navigateTo('login', [], 'splash');
-        }, CONFIG.splashDelay);
+        // If not logged in and starting from splash screen, transition to login
+        if (!savedSession && currentScreen === 'splash') {
+            const timer = setTimeout(() => {
+                navigateTo('login', [], 'splash');
+            }, CONFIG.splashDelay);
+            return () => clearTimeout(timer);
+        }
     }, []);
 
     /* ==========================================
@@ -95,19 +116,21 @@ export function App() {
         }
         
         setCurrentScreen(screenId);
+        localStorage.setItem('smart_ulcer_current_screen', screenId);
     };
 
     const navigateBack = (fallbackScreen = null) => {
         if (navigationStack.length === 0) {
-            if (fallbackScreen) {
-                setCurrentScreen(fallbackScreen);
-            }
+            const target = fallbackScreen || (currentUser ? 'dashboard' : 'login');
+            setCurrentScreen(target);
+            localStorage.setItem('smart_ulcer_current_screen', target);
             return;
         }
         
         const prevScreenId = navigationStack[navigationStack.length - 1];
         setNavigationStack(prev => prev.slice(0, -1));
         setCurrentScreen(prevScreenId);
+        localStorage.setItem('smart_ulcer_current_screen', prevScreenId);
     };
 
     /* ==========================================
@@ -128,7 +151,10 @@ export function App() {
 
     const handleLogout = () => {
         setCurrentUser(null);
+        setAnalysisResult(null);
         localStorage.removeItem('smart_ulcer_session');
+        localStorage.removeItem('smart_ulcer_current_screen');
+        sessionStorage.removeItem('smart_ulcer_last_result');
         navigateTo('login', []);
         showToast("Logged out successfully");
     };
@@ -138,12 +164,9 @@ export function App() {
        ========================================== */
 
     const makeRequest = async (endpoint, payload) => {
-        if (mockModeRef.current) {
-            return handleMockRequest(endpoint, payload);
-        }
-        
+        const baseUrl = getApiBaseUrl();
         try {
-            const response = await fetch(`${CONFIG.apiBaseUrl}${endpoint}`, {
+            const response = await fetch(`${baseUrl}${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -152,23 +175,22 @@ export function App() {
             });
             
             if (!response.ok) {
+                const errorData = await response.json().catch(() => null);
+                if (errorData && errorData.message) {
+                    return errorData;
+                }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
             return await response.json();
         } catch (e) {
-            console.warn(`Connection to API failed (${endpoint}). Activating offline mock fallback database.`, e);
-            mockModeRef.current = true;
-            showToast("Offline mode: Connecting to local sandbox");
+            console.warn(`Connection to API (${baseUrl}${endpoint}) failed. Using local fallback:`, e);
             return handleMockRequest(endpoint, payload);
         }
     };
 
     const uploadImageRequest = async (imageBlob, resultLabel, confidence, imageBase64) => {
-        if (mockModeRef.current) {
-            return handleMockUpload(imageBlob, resultLabel, confidence, imageBase64);
-        }
-        
+        const baseUrl = getApiBaseUrl();
         try {
             const formData = new FormData();
             formData.append('user_id', currentUser ? currentUser.id : 1);
@@ -178,7 +200,7 @@ export function App() {
                 formData.append('image', imageBlob, 'wound_capture.jpg');
             }
             
-            const response = await fetch(`${CONFIG.apiBaseUrl}upload_image.php`, {
+            const response = await fetch(`${baseUrl}upload_image.php`, {
                 method: 'POST',
                 body: formData
             });
@@ -195,12 +217,9 @@ export function App() {
     };
 
     const getHistoryRequest = async (userId) => {
-        if (mockModeRef.current) {
-            return handleMockGetHistory(userId);
-        }
-        
+        const baseUrl = getApiBaseUrl();
         try {
-            const response = await fetch(`${CONFIG.apiBaseUrl}get_history.php?user_id=${userId}`);
+            const response = await fetch(`${baseUrl}get_history.php?user_id=${userId}`);
             if (!response.ok) {
                 throw new Error(`History HTTP error! status: ${response.status}`);
             }
@@ -406,7 +425,13 @@ export function App() {
                 return (
                     <Upload 
                         onBack={navigateBack}
-                        onAnalysisComplete={(res) => { setAnalysisResult(res); navigateTo('result'); }}
+                        onAnalysisComplete={(res) => { 
+                            setAnalysisResult(res); 
+                            try {
+                                sessionStorage.setItem('smart_ulcer_last_result', JSON.stringify(res));
+                            } catch (e) {}
+                            navigateTo('result'); 
+                        }}
                         uploadImageRequest={uploadImageRequest}
                         classifier={classifierRef.current}
                         showToast={showToast}
@@ -434,7 +459,7 @@ export function App() {
                         getHistoryRequest={getHistoryRequest}
                         showToast={showToast}
                         userId={currentUser?.id}
-                        apiBaseUrl={CONFIG.apiBaseUrl}
+                        apiBaseUrl={getApiBaseUrl()}
                     />
                 );
                 
@@ -453,6 +478,7 @@ export function App() {
                 isOpen={isProfileOpen} 
                 onClose={() => setIsProfileOpen(false)} 
                 user={currentUser} 
+                onLogout={handleLogout}
             />
 
             {/* Dynamic Toast Container */}

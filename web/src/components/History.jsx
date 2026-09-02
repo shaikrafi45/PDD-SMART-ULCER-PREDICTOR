@@ -90,12 +90,11 @@ export function History({ onBack, getHistoryRequest, showToast, userId, apiBaseU
                         {historyList.map((item) => {
                             let imgSrc = item.image_path || item.image_url;
                             if (imgSrc && typeof imgSrc === 'string') {
-                                if (!imgSrc.startsWith('http') && !imgSrc.startsWith('data:') && !imgSrc.startsWith('blob:') && !imgSrc.startsWith('assets/')) {
+                                if (imgSrc.includes('uploads/')) {
+                                    const uploadIdx = imgSrc.indexOf('uploads/');
+                                    const relPath = imgSrc.substring(uploadIdx);
                                     const cleanBase = apiBaseUrl ? (apiBaseUrl.endsWith('/') ? apiBaseUrl : `${apiBaseUrl}/`) : '';
-                                    const cleanPath = imgSrc.startsWith('uploads/') 
-                                        ? imgSrc 
-                                        : (imgSrc.startsWith('/') ? imgSrc.slice(1) : `uploads/${imgSrc}`);
-                                    imgSrc = `${cleanBase}${cleanPath}`;
+                                    imgSrc = `${cleanBase}${relPath}`;
                                 }
                             }
                             

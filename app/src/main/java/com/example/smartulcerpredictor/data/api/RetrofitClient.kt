@@ -9,9 +9,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    // 10.0.2.2 is the special IP to access your computer's localhost from the Android emulator.
-    // If you are using a physical phone, change this to your computer's local IP address (e.g. 192.168.1.5)
-    private const val BASE_URL = "http://localhost:8080/smart_ulcer_api/"
+    // Current Host API URL
+    const val BASE_URL = "http://10.85.130.155/smart_ulcer_api/"
+
+    fun resolveImageUrl(rawUrl: String?): String {
+        if (rawUrl.isNullOrEmpty()) return ""
+        if (rawUrl.contains("uploads/")) {
+            val relPath = rawUrl.substring(rawUrl.indexOf("uploads/"))
+            return "${BASE_URL}$relPath"
+        }
+        return rawUrl
+    }
 
     val instance: ApiService by lazy {
         val retrofit = Retrofit.Builder()

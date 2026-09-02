@@ -20,16 +20,29 @@ try {
     $stmt = $conn->prepare($query);
     $stmt->execute([':user_id' => $userId]);
 
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+    $host = $_SERVER['HTTP_HOST'];
+    $path = dirname($_SERVER['PHP_SELF']);
+    $path = str_replace('\\', '/', $path);
+    $baseUrl = rtrim($protocol . $host . $path, '/') . '/';
+
     $historyItems = [];
     while ($row = $stmt->fetch()) {
         // Format ISO Date for Android compatibility
         $isoDate = date('Y-m-d\TH:i:s\Z', strtotime($row['created_at']));
         
+        $rawImage = $row['image_path'];
+        $imagePath = $rawImage;
+        if (!empty($rawImage) && strpos($rawImage, 'uploads/') !== false) {
+            $uploadRel = substr($rawImage, strpos($rawImage, 'uploads/'));
+            $imagePath = $baseUrl . $uploadRel;
+        }
+
         $historyItems[] = [
             "id" => (string)$row['id'],
             "result" => $row['result'],
             "confidence" => (float)$row['confidence'],
-            "image_path" => $row['image_path'],
+            "image_path" => $imagePath,
             "date" => $isoDate
         ];
     }

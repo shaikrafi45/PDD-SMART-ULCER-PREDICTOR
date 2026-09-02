@@ -10,7 +10,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +27,14 @@ fun AboutScreen(
     onLogout: () -> Unit = {},
     onUploadClick: () -> Unit = {}
 ) {
+    var showProfileDialog by remember { mutableStateOf(false) }
+
+    UserProfileDialog(
+        isOpen = showProfileDialog,
+        onClose = { showProfileDialog = false },
+        onLogout = onLogout
+    )
+
     Scaffold(
         containerColor = Color(0xFFFBFBFB),
         topBar = {
@@ -44,10 +52,10 @@ fun AboutScreen(
                 },
                 actions = {
                     IconButton(onClick = onHistory) {
-                        Icon(Icons.Default.History, contentDescription = "History")
+                        Icon(Icons.Default.History, contentDescription = "History", tint = Color(0xFF1976D2))
                     }
-                    IconButton(onClick = onLogout) {
-                        Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Logout")
+                    IconButton(onClick = { showProfileDialog = true }) {
+                        Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Profile & Logout", tint = Color(0xFFE53935))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFFBFBFB))
