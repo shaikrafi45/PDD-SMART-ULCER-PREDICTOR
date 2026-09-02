@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     // Current Host API URL
-    const val BASE_URL = "http://10.85.130.155/smart_ulcer_api/"
+    const val BASE_URL = "http://192.168.1.20/smart_ulcer_api/"
 
     fun resolveImageUrl(rawUrl: String?): String {
         if (rawUrl.isNullOrEmpty()) return ""
